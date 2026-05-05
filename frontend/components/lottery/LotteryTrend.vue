@@ -2,7 +2,8 @@
 import { Bar } from "vue-chartjs"
 import { formatDate } from "~/utils/formatDate"
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Tooltip, Legend } from "chart.js"
-ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend)
+import ChartDataLabels from "chartjs-plugin-datalabels"
+ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend, ChartDataLabels)
 
 const props = defineProps<{
   slug: string
@@ -75,25 +76,47 @@ const numberStats = computed(() => {
 
 const tableWidth = computed(() => 120 + 110 + 30 * maxNumber)
 
-// chartData.js
+const hasSpecial = computed(() => rows.value.some((row) => row.special !== null))
+
 const chartData = computed(() => ({
   labels: numberRange,
   datasets: [
-    {
-      label: "特別號出現次數",
-      data: numberRange.map((n) => numberStats.value.special[n]),
-      backgroundColor: "#F58642"
-    },
-    { label: "基本號出現次數", data: numberRange.map((n) => numberStats.value.regular[n]), backgroundColor: "#59ADBC" }
+    { label: "基本號出現次數", data: numberRange.map((n) => numberStats.value.regular[n]), backgroundColor: "#59ADBC" },
+    ...(hasSpecial.value ? [{ label: "特別號出現次數", data: numberRange.map((n) => numberStats.value.special[n]), backgroundColor: "#F58642" }] : [])
   ]
 }))
+
+const legendMarginPlugin = {
+  id: "legendMargin",
+  beforeInit(chart: any) {
+    const originalFit = chart.legend.fit
+    chart.legend.fit = function () {
+      originalFit.call(this)
+      this.height += 40
+    }
+  }
+}
 
 const chartOptions = {
   responsive: true,
   maintainAspectRatio: false, // 自訂高度
   plugins: {
     legend: {
-      position: "top" as const
+      position: "top" as const,
+      labels: {
+        font: {
+          size: 16,
+          weight: "bold" as const
+        }
+      }
+    },
+    datalabels: {
+      color: "#ffffff",
+      font: {
+        size: 11,
+        weight: "bold" as const
+      },
+      formatter: (value: number) => (value > 0 ? value : "")
     }
   },
   scales: {
@@ -120,10 +143,10 @@ const chartOptions = {
       max: 10,
       border: {
         display: false,
-        color: "#59ADBC",
-        dash: [15, 5] as number[]
+        dash: [10, 5] as number[]
       },
       grid: {
+        color: "#59ADBC",
         drawBorder: false
       },
 
@@ -145,8 +168,9 @@ const chartOptions = {
     <div class="max-w-[1200px] mx-auto px-2 sm:px-0 py-0">
       <LotteryPageHeader :logoSrc="logoSrc" :gameName="gameName" title="分布走勢圖" v-model="limit" />
     </div>
-    <div class="mx-auto w-full max-w-[1700px] max-h-[508px]">
-      <table class="mx-auto" style="border-collapse: collapse">
+    <div class="overflow-x-auto">
+    <div class="mx-auto w-full max-w-[1700px] max-h-[508px] overflow-y-auto">
+      <table class="mx-auto" :style="{ borderCollapse: 'collapse', minWidth: tableWidth + 'px' }">
         <thead>
           <tr style="background: #ff4100; color: white; text-align: center">
             <th style="width: 120px; border: 1px solid #1e7888; border-right: none; padding: 10px 0">期數</th>
@@ -171,8 +195,27 @@ const chartOptions = {
         </tbody>
       </table>
     </div>
-    <div class="mx-auto mt-4" :style="{ width: tableWidth + 'px', height: '293px' }">
-      <Bar :data="chartData" :options="chartOptions" />
+    </div>
+    <div class="overflow-x-auto mt-4">
+      <div class="mx-auto" :style="{ width: tableWidth + 'px', height: '293px' }">
+        <Bar :data="chartData" :options="chartOptions" :plugins="[legendMarginPlugin]" />
+      </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f0ede6;
+}
+::-webkit-scrollbar-thumb {
+  background: #59adbc;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #1e7888;
+}
+</style>
