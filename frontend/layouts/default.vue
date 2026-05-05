@@ -25,18 +25,11 @@ onUnmounted(() => document.removeEventListener("click", handleOutsideClick))
 </script>
 
 <template>
-  <div class="min-h-screen bg-cream relative">
+  <div class="min-h-screen bg-cream relative flex flex-col">
     <!-- Header -->
-    <header
-      class="py-2.5 relative flex items-center justify-center sm:h-[104px] h-[59px]"
-      style="background-color: #59adbc"
-    >
+    <header class="py-2.5 relative flex items-center justify-center sm:h-[104px] h-[59px]" style="background-color: #59adbc">
       <NuxtLink to="/">
-        <img
-          src="../public/images/logos/539lotto_header.png"
-          alt="今彩539"
-          class="h-[44px] sm:h-[90px] w-auto object-contain"
-        />
+        <img src="../public/images/logos/539lotto_header.png" alt="今彩539" class="h-[44px] sm:h-[90px] w-auto object-contain" />
       </NuxtLink>
       <!-- 漢堡選單按鈕 -->
       <button
@@ -59,19 +52,9 @@ onUnmounted(() => document.removeEventListener("click", handleOutsideClick))
 
     <!-- 展開選單 -->
     <Transition name="menu">
-      <nav
-        v-if="menuOpen"
-        ref="navRef"
-        class="absolute left-0 right-0 z-50 top-[59px] sm:top-[104px]"
-        style="background-color: #0b879e"
-      >
+      <nav v-if="menuOpen" ref="navRef" class="absolute left-0 right-0 z-50 top-[59px] sm:top-[104px]" style="background-color: #0b879e">
         <ul>
-          <li
-            v-for="item in menuItems"
-            :key="item.label"
-            class="border-b last:border-b-0"
-            style="border-color: rgba(255, 255, 255, 0.2)"
-          >
+          <li v-for="item in menuItems" :key="item.label" class="border-b last:border-b-0" style="border-color: rgba(255, 255, 255, 0.2)">
             <component
               :is="item.to ? NuxtLinkComponent : 'button'"
               :to="item.to || undefined"
@@ -90,7 +73,7 @@ onUnmounted(() => document.removeEventListener("click", handleOutsideClick))
     </Transition>
 
     <!-- Main content -->
-    <main class="mx-auto max-w-[1540px] px-2 py-3 sm:px-4">
+    <main class="flex-1 px-2 py-3 sm:px-4">
       <slot />
     </main>
 

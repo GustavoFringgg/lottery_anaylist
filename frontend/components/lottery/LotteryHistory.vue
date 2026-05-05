@@ -1,16 +1,15 @@
 <script setup lang="ts">
 import { formatDate } from "~/utils/formatDate"
 
+// 1. props
 const props = defineProps<{
   slug: string
   logoSrc: string
 }>()
 
-
-const PAGE_SIZE = 8
-
+// 2. 資料來源
 const { getDraws } = useLotteryApi()
-
+const PAGE_SIZE = 8
 const limit = ref(10)
 const currentPage = ref(1)
 
@@ -18,6 +17,7 @@ const { data } = await useAsyncData(`lottery-history-${props.slug}`, () => getDr
   watch: [limit]
 })
 
+// 3. 衍生 computed
 const gameName = computed(() => data.value?.name ?? "")
 
 const rows = computed(() =>
@@ -29,26 +29,21 @@ const rows = computed(() =>
   }))
 )
 
+const hasSpecial = computed(() => rows.value.some((row) => row.special !== null))
+
+// 4. 分頁
 const totalPages = computed(() => Math.ceil(rows.value.length / PAGE_SIZE))
 
 const pagedRows = computed(() => {
   const start = (currentPage.value - 1) * PAGE_SIZE
   return rows.value.slice(start, start + PAGE_SIZE)
 })
-
-const hasSpecial = computed(() => rows.value.some((row) => row.special !== null))
 </script>
 
 <template>
-  <div class="bg-[#f0ede6] min-h-screen">
+  <div class="bg-[#f0ede6]">
     <div class="max-w-[1200px] mx-auto px-2 sm:px-0 py-0">
-      <LotteryPageHeader
-        :logoSrc="logoSrc"
-        :gameName="gameName"
-
-        title="歷年開獎號碼查詢"
-        v-model="limit"
-      />
+      <LotteryPageHeader :logoSrc="logoSrc" :gameName="gameName" title="歷年開獎號碼查詢" v-model="limit" />
 
       <!-- 桌面版表格 -->
       <div class="hidden sm:block border border-[#007979] rounded overflow-hidden">
@@ -111,12 +106,7 @@ const hasSpecial = computed(() => rows.value.some((row) => row.special !== null)
             </div>
             <div class="py-3 text-[#2b2b2b] font-medium text-[16px] text-center">{{ row.date }}</div>
           </div>
-          <div
-            class="py-2 text-white font-bold text-[16px] text-center border-b border-[#007979]"
-            style="background: #2db38d"
-          >
-            開獎號碼
-          </div>
+          <div class="py-2 text-white font-bold text-[16px] text-center border-b border-[#007979]" style="background: #2db38d">開獎號碼</div>
           <div class="py-3 flex items-center justify-center gap-2">
             <span
               v-for="n in row.numbers"

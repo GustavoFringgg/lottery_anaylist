@@ -13,10 +13,7 @@
           {{ activeLabel }}
           <span class="text-xs">▼</span>
         </button>
-        <div
-          v-if="featureOpen"
-          class="absolute right-0 top-full mt-1 bg-white border border-[#007979] rounded z-20 min-w-[200px] shadow"
-        >
+        <div v-if="featureOpen" class="absolute right-0 top-full mt-1 bg-white border border-[#007979] rounded z-20 min-w-[200px] shadow">
           <button
             v-for="f in features"
             :key="f.value"
@@ -54,15 +51,15 @@
 <script setup lang="ts">
 const SUB_FEATURES = [
   { label: "歷年開獎號碼", value: "history" },
-  { label: "分布走勢圖", value: "trend" },
-  { label: "各期統計分析", value: "stats" },
-  { label: "三分區分佈圖", value: "zone" },
-  { label: "單雙比分析圖", value: "odd-even" },
-  { label: "首數分析圖", value: "first-digit" },
-  { label: "尾數分析圖", value: "last-digit" },
+  { label: "分布走勢圖", value: "trend" }
+  // { label: "各期統計分析", value: "stats" },
+  // { label: "三分區分佈圖", value: "zone" },
+  // { label: "單雙比分析圖", value: "odd-even" },
+  // { label: "首數分析圖", value: "first-digit" },
+  // { label: "尾數分析圖", value: "last-digit" }
 ]
 
-const GAMES_WITH_SPECIAL = ['big-lotto', 'power-lotto', 'bingo']
+const GAMES_WITH_SPECIAL = ["big-lotto", "power-lotto", "bingo"]
 
 const options = [10, 20, 30]
 
@@ -79,10 +76,9 @@ const route = useRoute()
 
 const features = computed(() => {
   const slug = route.params.slug as string
-  const extra = GAMES_WITH_SPECIAL.includes(slug)
-    ? [{ label: "特別號分析", value: "special" }]
-    : []
-  return [...SUB_FEATURES, ...extra]
+  // const extra = GAMES_WITH_SPECIAL.includes(slug) ? [{ label: "特別號分析", value: "special" }] : []
+  // return [...SUB_FEATURES, ...extra]
+  return SUB_FEATURES
 })
 
 const activeFeature = computed(() => route.path.split("/").pop() ?? "")
