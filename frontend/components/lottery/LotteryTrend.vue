@@ -78,37 +78,63 @@ const tableWidth = computed(() => 120 + 110 + 30 * maxNumber)
 
 const hasSpecial = computed(() => rows.value.some((row) => row.special !== null))
 
+const sortedNumbers = computed(() =>
+  [...numberRange].sort((a, b) => {
+    const totalA = numberStats.value.regular[a] + (hasSpecial.value ? numberStats.value.special[a] : 0)
+    const totalB = numberStats.value.regular[b] + (hasSpecial.value ? numberStats.value.special[b] : 0)
+    const diff = totalB - totalA
+    return diff !== 0 ? diff : a - b
+  })
+)
+
 const chartData = computed(() => ({
-  labels: numberRange,
+  labels: sortedNumbers.value,
   datasets: [
-    { label: "基本號出現次數", data: numberRange.map((n) => numberStats.value.regular[n]), backgroundColor: "#59ADBC" },
-    ...(hasSpecial.value ? [{ label: "特別號出現次數", data: numberRange.map((n) => numberStats.value.special[n]), backgroundColor: "#F58642" }] : [])
+    { label: "基本號出現次數", data: sortedNumbers.value.map((n) => numberStats.value.regular[n]), backgroundColor: "#59ADBC" },
+    ...(hasSpecial.value
+      ? [{ label: "特別號出現次數", data: sortedNumbers.value.map((n) => numberStats.value.special[n]), backgroundColor: "#F58642" }]
+      : [])
   ]
 }))
 
-const legendMarginPlugin = {
-  id: "legendMargin",
-  beforeInit(chart: any) {
-    const originalFit = chart.legend.fit
-    chart.legend.fit = function () {
-      originalFit.call(this)
-      this.height += 40
-    }
+const lottoBallPlugin = {
+  id: "lottoBall",
+  afterDraw(chart: any) {
+    const ctx = chart.ctx
+    const xAxis = chart.scales.x
+    const radius = 13
+
+    xAxis.ticks.forEach((_: any, index: number) => {
+      const x = xAxis.getPixelForTick(index)
+      const y = xAxis.top + radius + 8
+
+      ctx.save()
+      ctx.shadowColor = "rgba(0, 0, 0, 0.4)"
+      ctx.shadowBlur = 6
+      ctx.shadowOffsetX = 2
+      ctx.shadowOffsetY = 3
+      ctx.beginPath()
+      ctx.arc(x, y, radius, 0, Math.PI * 2)
+      ctx.fillStyle = "#FFE868"
+      ctx.fill()
+
+      ctx.shadowColor = "transparent"
+      ctx.fillStyle = "#000000"
+      ctx.font = "bold 11px sans-serif"
+      ctx.textAlign = "center"
+      ctx.textBaseline = "middle"
+      ctx.fillText(String(xAxis.ticks[index].label), x, y)
+      ctx.restore()
+    })
   }
 }
 
 const chartOptions = {
   responsive: true,
-  maintainAspectRatio: false, // 自訂高度
+  maintainAspectRatio: false,
   plugins: {
     legend: {
-      position: "top" as const,
-      labels: {
-        font: {
-          size: 16,
-          weight: "bold" as const
-        }
-      }
+      display: false
     },
     datalabels: {
       color: "#ffffff",
@@ -130,11 +156,10 @@ const chartOptions = {
         display: true
       },
       ticks: {
-        color: "#59ADBC" as const,
-        font: {
-          size: 16,
-          weight: "bold" as const
-        }
+        display: false
+      },
+      afterFit(scale: any) {
+        scale.height = 65
       }
     },
     y: {
@@ -169,36 +194,48 @@ const chartOptions = {
       <LotteryPageHeader :logoSrc="logoSrc" :gameName="gameName" title="分布走勢圖" v-model="limit" />
     </div>
     <div class="overflow-x-auto">
-    <div class="mx-auto w-full max-w-[1700px] max-h-[508px] overflow-y-auto">
-      <table class="mx-auto" :style="{ borderCollapse: 'collapse', minWidth: tableWidth + 'px' }">
-        <thead>
-          <tr style="background: #ff4100; color: white; text-align: center">
-            <th style="width: 120px; border: 1px solid #1e7888; border-right: none; padding: 10px 0">期數</th>
-            <th style="width: 110px; border: 1px solid #1e7888; border-left: none; padding: 10px 0">日期</th>
-            <th
-              v-for="n in numberRange"
-              :key="n"
-              :style="[headerCellStyle(n), 'width: 30px; font-size: 12px; border: 1px solid #1e7888; padding: 10px 0']"
-            >
-              {{ n }}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="row in rows" :key="row.term" style="text-align: center; font-size: 13px">
-            <td style="border: 1px solid #1e7888; background: #ffffff; padding: 8px 0; color: #2b2b2b; font-weight: bold">{{ row.term }}</td>
-            <td style="border: 1px solid #1e7888; background: #ffffff; padding: 8px 0; color: #2b2b2b; font-weight: bold">{{ row.date }}</td>
-            <td v-for="n in numberRange" :key="n" :style="[cellStyle(row, n), 'border:1px solid #1E7888;padding: 10px 0']">
-              {{ row.drawnSet.has(n) || row.special === n ? n : "" }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="mx-auto w-full max-w-[1700px] max-h-[508px] overflow-y-auto">
+        <table class="mx-auto" :style="{ borderCollapse: 'collapse', minWidth: tableWidth + 'px' }">
+          <thead>
+            <tr style="background: #ff4100; color: white; text-align: center">
+              <th style="width: 120px; border: 1px solid #1e7888; border-right: none; padding: 10px 0">期數</th>
+              <th style="width: 110px; border: 1px solid #1e7888; border-left: none; padding: 10px 0">日期</th>
+              <th
+                v-for="n in numberRange"
+                :key="n"
+                :style="[headerCellStyle(n), 'width: 30px; font-size: 12px; border: 1px solid #1e7888; padding: 10px 0']"
+              >
+                {{ n }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="row in rows" :key="row.term" style="text-align: center; font-size: 13px">
+              <td style="border: 1px solid #1e7888; background: #ffffff; padding: 8px 0; color: #2b2b2b; font-weight: bold">{{ row.term }}</td>
+              <td style="border: 1px solid #1e7888; background: #ffffff; padding: 8px 0; color: #2b2b2b; font-weight: bold">{{ row.date }}</td>
+              <td v-for="n in numberRange" :key="n" :style="[cellStyle(row, n), 'border:1px solid #1E7888;padding: 10px 0']">
+                {{ row.drawnSet.has(n) || row.special === n ? n : "" }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-    </div>
-    <div class="overflow-x-auto mt-4">
-      <div class="mx-auto" :style="{ width: tableWidth + 'px', height: '293px' }">
-        <Bar :data="chartData" :options="chartOptions" :plugins="[legendMarginPlugin]" />
+    <div class="mt-4">
+      <div class="flex justify-center gap-6 mb-2">
+        <div class="flex items-center gap-1">
+          <span class="inline-block w-4 h-4 rounded-sm bg-[#59ADBC]"></span>
+          <span class="text-xl font-bold text-[#59ADBC]">基本號出現次數</span>
+        </div>
+        <div v-if="hasSpecial" class="flex items-center gap-1">
+          <span class="inline-block w-4 h-4 rounded-sm bg-[#F58642]"></span>
+          <span class="text-xl font-bold text-[#F58642]">特別號出現次數</span>
+        </div>
+      </div>
+      <div class="overflow-x-auto">
+        <div class="mx-auto" :style="{ width: tableWidth + 'px', height: '293px' }">
+          <Bar :data="chartData" :options="chartOptions" :plugins="[lottoBallPlugin]" />
+        </div>
       </div>
     </div>
   </div>
