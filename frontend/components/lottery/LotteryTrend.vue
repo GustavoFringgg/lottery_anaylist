@@ -97,6 +97,38 @@ const chartData = computed(() => ({
   ]
 }))
 
+const lottoBallPlugin = {
+  id: "lottoBall",
+  afterDraw(chart: any) {
+    const ctx = chart.ctx
+    const xAxis = chart.scales.x
+    const radius = 13
+
+    xAxis.ticks.forEach((_: any, index: number) => {
+      const x = xAxis.getPixelForTick(index)
+      const y = xAxis.top + radius + 8
+
+      ctx.save()
+      ctx.shadowColor = "rgba(0, 0, 0, 0.4)"
+      ctx.shadowBlur = 6
+      ctx.shadowOffsetX = 2
+      ctx.shadowOffsetY = 3
+      ctx.beginPath()
+      ctx.arc(x, y, radius, 0, Math.PI * 2)
+      ctx.fillStyle = "#FFE868"
+      ctx.fill()
+
+      ctx.shadowColor = "transparent"
+      ctx.fillStyle = "#000000"
+      ctx.font = "bold 11px sans-serif"
+      ctx.textAlign = "center"
+      ctx.textBaseline = "middle"
+      ctx.fillText(String(xAxis.ticks[index].label), x, y)
+      ctx.restore()
+    })
+  }
+}
+
 const chartOptions = {
   responsive: true,
   maintainAspectRatio: false,
@@ -124,11 +156,10 @@ const chartOptions = {
         display: true
       },
       ticks: {
-        color: "#59ADBC" as const,
-        font: {
-          size: 16,
-          weight: "bold" as const
-        }
+        display: false
+      },
+      afterFit(scale: any) {
+        scale.height = 65
       }
     },
     y: {
@@ -203,7 +234,7 @@ const chartOptions = {
       </div>
       <div class="overflow-x-auto">
         <div class="mx-auto" :style="{ width: tableWidth + 'px', height: '293px' }">
-          <Bar :data="chartData" :options="chartOptions" />
+          <Bar :data="chartData" :options="chartOptions" :plugins="[lottoBallPlugin]" />
         </div>
       </div>
     </div>
