@@ -56,7 +56,7 @@ onUnmounted(() => clearInterval(timer))
         >
           <picture class="w-full h-full">
             <source media="(min-width: 640px)" :srcset="slide.desktop" />
-            <img :src="slide.mobile" :alt="`廣告 ${i + 1}`" class="w-full h-full object-cover" />
+            <img :src="slide.mobile" :alt="`廣告 ${i + 1}`" :loading="i === 0 ? 'eager' : 'lazy'" :fetchpriority="i === 0 ? 'high' : 'auto'" class="w-full h-full object-cover" />
           </picture>
         </div>
       </TransitionGroup>

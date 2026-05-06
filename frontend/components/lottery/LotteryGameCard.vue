@@ -45,7 +45,7 @@ const gridStyle = computed(() => {
   >
     <div class="absolute top-1 left-1 sm:top-1 sm:left-3"><slot /></div>
     <div class="flex justify-center pt-4 pb-2">
-      <img v-if="game.logo" :src="game.logo" :alt="game.name" class="w-[200px] h-[80px] object-contain" />
+      <img v-if="game.logo" :src="game.logo" :alt="game.name" loading="lazy" class="w-[200px] h-[80px] object-contain" />
     </div>
     <!-- Draw info bar -->
     <div :class="fullWidth ? 'sm:mx-[100px]' : ''">
