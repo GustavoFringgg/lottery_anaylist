@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { CardData } from "~/types/index"
+import { menuItems } from "~/constants"
 
 // --- Countdown Timer ---
 const days = ref(0)
@@ -40,6 +41,19 @@ useHead({ title: "台灣彩券最新開獎號碼 - 專業分析熱點走勢圖" 
   <h1 class="sr-only">台灣彩券最新開獎號碼 - 專業分析熱點走勢圖</h1>
   <div class="flex flex-col w-full max-w-[1200px] mx-auto">
     <AdCarousel />
+    <!-- 手機版遊戲入口 Grid -->
+    <div class="grid grid-cols-2 gap-2 p-2 sm:hidden">
+      <NuxtLink
+        v-for="item in menuItems"
+        :key="item.label"
+        :to="item.to || '/'"
+        class="flex items-center gap-3 px-3 py-2 rounded-lg"
+        style="background-color: #00c296"
+      >
+        <img :src="item.logo" :alt="item.label" loading="lazy" class="h-10 w-[75px] object-contain shrink-0" />
+        <span class="text-white font-medium text-[16px]">分析參考</span>
+      </NuxtLink>
+    </div>
   </div>
   <div class="space-y-3 flex flex-col w-full max-w-[1200px] mx-auto px-2 sm:px-4">
     <!-- <div
