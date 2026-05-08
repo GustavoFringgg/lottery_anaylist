@@ -3,11 +3,36 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, desc
 from app.core.database import get_session
 from app.models.lottery import DrawsList,BingoExtra,Game
-from app.schemas.lottery import DrawResponse, DrawHistoryItem, BingoDrawHistoryItem, BingoResponse, DrawListResponse
+from app.schemas.lottery import DrawResponse, DrawHistoryItem, BingoDrawHistoryItem, BingoResponse, DrawListResponse,DrawStatsItem,DrawStatsResponse
 from app.core.security import verify_api_key
+from collections import Counter
 router = APIRouter()
 
 GAMES_WITH_SPECIAL = {5118, 5134}
+
+def compute_stats(numbers:list[int])-> dict:
+    n = len(numbers)
+    odds = sum(1 for x in numbers if  x % 2 != 0)
+    total = sum(numbers)
+    tails = [x % 10 for x in numbers]
+    tail_counts = Counter(tails)
+    groups = sorted(
+      [(tail, count) for tail, count in tail_counts.items() if count >= 2])
+    same_tail = "、".join(f"{tail}尾({count})" for tail, count in groups) or "-"
+    return {
+      "odd_even_ratio": f"{odds}:{n - odds}",
+      "total_sum": total,
+      "average": round(total / n, 2),
+      "same_tail": same_tail,
+      "head_tail_diff": max(numbers) - min(numbers),
+      "tail_sum": sum(tails),
+      "head_sum": sum(x // 10 for x in numbers),
+      }
+    
+
+
+
+
 def get_special(game_code:int,numbers:list[int])-> int | None:
     if game_code in GAMES_WITH_SPECIAL:
         return numbers[-1]
@@ -120,4 +145,43 @@ async def get_latest_bingo(db:AsyncSession = Depends(get_session)):
         special=special_num,
         lot_big_small=extra.lot_big_small,
         lot_odd_even=extra.lot_odd_even,
+    )
+
+
+
+@router.get('/stats/{slug}',response_model  = DrawStatsResponse,dependencies=[Depends(verify_api_key)])
+async def get_stats_by_slug(slug:str,limit:int = 10,db:AsyncSession = Depends(get_session)):
+    limit = min(limit,30)
+    game_result = await db.execute(select(Game).where(Game.slug == slug))
+    game = game_result.scalars().first()
+    if game is None:
+        raise HTTPException(status_code = 404, detail = 'not found game')
+    if game.game_code == 1102:
+        raise HTTPException(status_code=400,detail='Bingo 不支援此功能')
+    else:
+        draws_result = await db.execute(
+            select(DrawsList)
+            .where(DrawsList.game_code == game.game_code)
+            .order_by(desc(DrawsList.draw_date))
+            .limit(limit)
+        )
+        draws = draws_result.scalars().all()
+
+        draw_list = []
+        for draw in draws:
+            special = get_special(draw.game_code, draw.numbers)
+            numbers = draw.numbers[:-1] if special is not None else draw.numbers
+            draw_list.append(DrawStatsItem(
+                game_code=draw.game_code,
+                term=draw.term,
+                draw_date=draw.draw_date,
+                numbers=numbers,
+                special=special,
+                **compute_stats(numbers),
+            ))
+
+    return DrawStatsResponse(
+        slug=game.slug,
+        name=game.name,
+        draw_list=draw_list,
     )
