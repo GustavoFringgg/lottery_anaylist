@@ -14,9 +14,9 @@ const NuxtLinkComponent = resolveComponent("NuxtLink")
         </NuxtLink>
       </div>
       <!-- 白色分隔線 -->
-      <div class="hidden sm:block w-[95%] h-px bg-white mx-auto"></div>
+      <div class="hidden md:block w-[95%] h-px bg-white mx-auto"></div>
       <!-- 遊戲 Logo 導覽列 -->
-      <nav class="hidden sm:flex items-center justify-center gap-8 px-4 py-3">
+      <nav class="hidden md:flex items-center justify-center gap-8 px-4 py-3">
         <!-- TODO: 如果有所有 label 都有導航的話 要改使用 NuxtLink 處理 -->
         <component
           v-for="item in menuItems"

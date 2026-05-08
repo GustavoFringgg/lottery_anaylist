@@ -42,7 +42,7 @@ useHead({ title: "台灣彩券最新開獎號碼 - 專業分析熱點走勢圖" 
   <div class="flex flex-col w-full max-w-[1200px] mx-auto">
     <AdCarousel />
     <!-- 手機版遊戲入口 Grid -->
-    <div class="grid grid-cols-2 gap-2 p-2 sm:hidden">
+    <div class="grid grid-cols-2 gap-2 p-2 md:hidden">
       <NuxtLink
         v-for="item in menuItems"
         :key="item.label"
