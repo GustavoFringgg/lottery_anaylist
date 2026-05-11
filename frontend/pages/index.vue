@@ -35,6 +35,18 @@ const { featured: gamesFeatured, grid: gamesGrid } = useLotteryLatest()
 const { bingoCard } = useBingoLatest()
 
 useHead({ title: "台灣彩券最新開獎號碼 - 專業分析熱點走勢圖" })
+
+const navCards = [
+  { title: "支持公益\n理性投注", to: "/responsible-gambling", color: "green" },
+  { title: "...", to: "/", color: "orange" },
+  { title: "...", to: "/", color: "blue" }
+]
+
+const cardGradient: Record<string, string> = {
+  green: "linear-gradient(135deg, #00C296, #59ADBC)",
+  orange: "linear-gradient(135deg, #f7971e, #f5a623)",
+  blue: "linear-gradient(135deg, #4a90d9, #87b8e8)"
+}
 </script>
 
 <template>
@@ -96,6 +108,21 @@ useHead({ title: "台灣彩券最新開獎號碼 - 專業分析熱點走勢圖" 
       <LotteryGameCard v-for="game in gamesGrid" :key="game.name + game.draw_term" :game="game">
         <DrawDateButton class="mt-[5px] sm:mt-[10px]" v-if="isDrawTody(game)">今日開獎</DrawDateButton>
       </LotteryGameCard>
+    </div>
+
+    <!-- 入口導航卡片 -->
+    <div class="grid grid-cols-3 gap-4 mt-4">
+      <NuxtLink
+        v-for="card in navCards"
+        :key="card.title"
+        :to="card.to"
+        class="relative flex items-center justify-center"
+        :style="{ background: cardGradient[card.color], minHeight: '180px', width: '100%', aspectRatio: '1 / 1' }"
+      >
+        <!-- 白色內框 -->
+        <div class="absolute inset-6 flex items-center justify-center" style="border: 9px solid white; border-radius: 27px" />
+        <p class="relative z-10 text-white font-black text-center whitespace-pre-line" style="font-size: 24px">{{ card.title }}</p>
+      </NuxtLink>
     </div>
 
     <!-- Ad Banner -->
