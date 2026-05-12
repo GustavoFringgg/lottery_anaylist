@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { menuItems } from '~/constants'
 const NuxtLinkComponent = resolveComponent("NuxtLink")
+const route = useRoute()
 </script>
 
 <template>
@@ -35,6 +36,12 @@ const NuxtLinkComponent = resolveComponent("NuxtLink")
         </component>
       </nav>
     </header>
+
+    <!-- 首頁才顯示輪播 -->
+    <AdCarousel v-if="route.path === '/'" />
+
+    <!-- 手機版遊戲入口（每頁都有） -->
+    <MobileGameGrid />
 
     <!-- Main content -->
     <main class="flex-1 px-2 py-3 sm:px-4">

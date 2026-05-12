@@ -44,7 +44,7 @@ const clauses = [
 </script>
 
 <template>
-  <div class="w-full max-w-[860px] mx-auto px-4 py-10">
+  <div class="w-full max-w-[860px] mx-auto px-4 py-1">
     <h1 class="text-[40px] font-black text-center mb-8">免責聲明</h1>
 
     <div class="flex flex-col gap-5">
