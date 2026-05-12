@@ -4,15 +4,13 @@ const slides = [
     desktop: "/images/ads/ad1-desktop.png",
     mobile: "/images/ads/ad1-mobile.png",
     type: "external",
-    url: "https://165.npa.gov.tw/#/promotion",
-    name: "test"
+    url: "https://165.npa.gov.tw/#/promotion"
   },
   {
     desktop: "/images/ads/ad2-desktop.png",
     mobile: "/images/ads/ad2-mobile.png",
     type: "internal",
-    url: "/",
-    num: 1
+    url: "/responsible-gambling"
   }
 ]
 
@@ -47,16 +45,16 @@ onUnmounted(() => clearInterval(timer))
       style="border-radius: 5px"
     >
       <TransitionGroup name="fade">
-        <div
-          v-for="(slide, i) in slides"
-          v-show="current === i"
-          :key="i"
-          class="absolute inset-0 w-full h-full"
-          @click="handleClick(slide)"
-        >
+        <div v-for="(slide, i) in slides" v-show="current === i" :key="i" class="absolute inset-0 w-full h-full" @click="handleClick(slide)">
           <picture class="w-full h-full">
             <source media="(min-width: 640px)" :srcset="slide.desktop" />
-            <img :src="slide.mobile" :alt="`廣告 ${i + 1}`" :loading="i === 0 ? 'eager' : 'lazy'" :fetchpriority="i === 0 ? 'high' : 'auto'" class="w-full h-full object-cover" />
+            <img
+              :src="slide.mobile"
+              :alt="`廣告 ${i + 1}`"
+              :loading="i === 0 ? 'eager' : 'lazy'"
+              :fetchpriority="i === 0 ? 'high' : 'auto'"
+              class="w-full h-full object-cover"
+            />
           </picture>
         </div>
       </TransitionGroup>

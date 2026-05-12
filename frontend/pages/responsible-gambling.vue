@@ -26,13 +26,13 @@ const orgs = [
 
 <template>
   <!-- Hero 區 -->
-  <section class="w-full py-10 text-center" ">
+  <section class="w-full text-center" ">
     <p class="font-black mb-1" style="color: #ed8b2f;font-size: 25px;">投注不過度 助人又樂己</p>
-    <h1 class="px-6 py-2 rounded font-black text-[20px] md:text-[67px]" style="color: #59adbc;">支持公益 理性投注</h1>
+    <h1 class="px-3 py-2 rounded font-black text-[20px] md:text-[67px]" style="color: #59adbc;">支持公益 理性投注</h1>
   </section>
 
   <!-- Body 主區塊 -->
-  <div class="mx-auto px-4 py-10" style="max-width: 1200px">
+  <div class="mx-auto px-4 py-4" style="max-width: 1200px">
     <!-- Section 1: 四件事 -->
     <h2 class="text-center font-black text-[20px] md:text-[50px] mb-8" style="color: #59adbc">關於理性投注 您該知道的4件事...</h2>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-6" style="margin-bottom: 32px">
