@@ -88,7 +88,7 @@ async def get_draws_by_slug(
                 game_code=draw.game_code,
                 term=draw.term,
                 draw_date=draw.draw_date,
-                numbers=draw.numbers,
+                numbers=sorted(draw.numbers),
                 special=special,
                 lot_big_small=extra.lot_big_small,
                 lot_odd_even=extra.lot_odd_even,
@@ -110,7 +110,7 @@ async def get_draws_by_slug(
                 game_code=draw.game_code,
                 term=draw.term,
                 draw_date=draw.draw_date,
-                numbers=numbers,
+                numbers=sorted(numbers),
                 special=special,
             ))
         

@@ -43,14 +43,14 @@ const GAME_META: Record<
   2108: {
     name: "3星彩",
     nameColor: "#c8a000",
-    logo: "/images/logos/3starts.png",
+    logo: "/images/logos/3star.png",
     bgColor: "#FFD269",
     draw_days: [1, 2, 3, 4, 5]
   },
   2109: {
     name: "4星彩",
     nameColor: "#e65100",
-    logo: "/images/logos/4starts.png",
+    logo: "/images/logos/4star.png",
     bgColor: "#FFD269",
     draw_days: [1, 2, 3, 4, 5]
   }
@@ -97,9 +97,7 @@ export const useLotteryLatest = () => {
     })
   })
 
-  const featured = computed(
-    () => FEATURED_CODES.map((code) => games.value.find((g) => g.game_code === code)).filter(Boolean) as CardData[]
-  )
+  const featured = computed(() => FEATURED_CODES.map((code) => games.value.find((g) => g.game_code === code)).filter(Boolean) as CardData[])
   const grid = computed(() => games.value.filter((g) => !FEATURED_CODES.includes(g.game_code)))
 
   return { featured, grid, error, refresh }
