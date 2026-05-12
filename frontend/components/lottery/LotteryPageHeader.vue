@@ -49,17 +49,22 @@
 </template>
 
 <script setup lang="ts">
-const SUB_FEATURES = [
-  { label: "歷年開獎號碼", value: "history" },
-  { label: "分布走勢圖", value: "trend" }
-  // { label: "各期統計分析", value: "stats" },
-  // { label: "三分區分佈圖", value: "zone" },
-  // { label: "單雙比分析圖", value: "odd-even" },
-  // { label: "首數分析圖", value: "first-digit" },
-  // { label: "尾數分析圖", value: "last-digit" }
-]
+type Feature = { label: string; value: string }
 
-const GAMES_WITH_SPECIAL = ["big-lotto", "power-lotto", "bingo"]
+//TODO: 透過slug選擇開放功能 如果全部開發完畢記得更換
+const FEATURES_BY_SLUG: Record<string, Feature[]> = {
+  "539": [
+    { label: "歷年開獎號碼", value: "history" },
+    { label: "分布走勢圖", value: "trend" }
+  ],
+  "big-lotto": [
+    { label: "歷年開獎號碼", value: "history" },
+    { label: "分布走勢圖", value: "trend" }
+  ],
+  "power-lotto": [{ label: "歷年開獎號碼", value: "history" }]
+}
+
+const DEFAULT_FEATURES: Feature[] = [{ label: "歷年開獎號碼", value: "history" }]
 
 const options = [10, 20, 30]
 
@@ -76,9 +81,7 @@ const route = useRoute()
 
 const features = computed(() => {
   const slug = route.params.slug as string
-  // const extra = GAMES_WITH_SPECIAL.includes(slug) ? [{ label: "特別號分析", value: "special" }] : []
-  // return [...SUB_FEATURES, ...extra]
-  return SUB_FEATURES
+  return FEATURES_BY_SLUG[slug] ?? DEFAULT_FEATURES
 })
 
 const activeFeature = computed(() => route.path.split("/").pop() ?? "")

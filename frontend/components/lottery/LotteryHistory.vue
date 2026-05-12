@@ -37,7 +37,9 @@ const DRAW_TITLE_MAP: Record<string, string> = {
   "539": "開獎號碼 (5個)",
   bingo: "開獎號碼 + 超級獎號",
   "49lotto": "開獎號碼 (6個)",
-  "39lotto": "開獎號碼 (5個)"
+  "39lotto": "開獎號碼 (5個)",
+  "4star": "開獎號碼 (4個)",
+  "3star": "開獎號碼 (3個)"
 }
 const drawTitle = computed(() => DRAW_TITLE_MAP[props.slug] ?? (hasSpecial.value ? "開獎號碼 + 特別號" : "開獎號碼 (5個)"))
 

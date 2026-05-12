@@ -5,6 +5,6 @@ export const menuItems = [
   { label: "BINGO BINGO", logo: "/images/ham_logo/bingo.png", to: "/" },
   { label: "49樂合彩", logo: "/images/ham_logo/49lotto.png", to: "/lotto/49lotto/history" },
   { label: "39樂合彩", logo: "/images/ham_logo/39lotto.png", to: "/" },
-  { label: "4星彩", logo: "/images/ham_logo/4star.png", to: "/" },
+  { label: "4星彩", logo: "/images/ham_logo/4star.png", to: "/lotto/4star/history" },
   { label: "3星彩", logo: "/images/ham_logo/3star.png", to: "/" }
 ]

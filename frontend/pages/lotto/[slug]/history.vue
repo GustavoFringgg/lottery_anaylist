@@ -1,6 +1,16 @@
 <script setup lang="ts">
+//TODO: 這裏思考是否可以合併
 const route = useRoute()
 const slug = route.params.slug as string
+
+const VALID_SLUGS = ["539", "big-lotto", "power-lotto", "bingo", "49lotto", "39lotto", "4star", "3star"]
+if (!VALID_SLUGS.includes(slug)) {
+  if (import.meta.server) {
+    await navigateTo("/", { redirectCode: 301 })
+  } else {
+    window.location.href = "/"
+  }
+}
 
 const LOGO_MAP: Record<string, string> = {
   "539": "/images/logos/539lotto.png",
