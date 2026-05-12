@@ -1,3 +1,52 @@
+<script setup lang="ts">
+type Feature = { label: string; value: string }
+
+//TODO: 透過slug選擇開放功能 如果全部開發完畢記得更換
+const FEATURES_BY_SLUG: Record<string, Feature[]> = {
+  "539": [
+    { label: "歷年開獎號碼", value: "history" },
+    { label: "分布走勢圖", value: "trend" }
+  ],
+  "big-lotto": [
+    { label: "歷年開獎號碼", value: "history" },
+    { label: "分布走勢圖", value: "trend" }
+  ],
+  "power-lotto": [{ label: "歷年開獎號碼", value: "history" }]
+}
+
+const DEFAULT_FEATURES: Feature[] = [{ label: "歷年開獎號碼", value: "history" }]
+
+const options = [10, 20, 30]
+
+const props = defineProps<{
+  logoSrc: string
+  gameName: string
+  title: string
+}>()
+
+const limit = defineModel<number>({ required: true })
+
+const router = useRouter()
+const route = useRoute()
+
+const features = computed(() => {
+  const slug = route.params.slug as string
+  return FEATURES_BY_SLUG[slug] ?? DEFAULT_FEATURES
+})
+
+const activeFeature = computed(() => route.path.split("/").pop() ?? "")
+
+const activeLabel = computed(() => features.value.find((f) => f.value === activeFeature.value)?.label)
+
+const featureOpen = ref(false)
+
+function selectFeature(value: string) {
+  featureOpen.value = false
+  const slug = route.params.slug as string
+  router.push(`/lotto/${slug}/${value}`)
+}
+</script>
+
 <template>
   <div>
     <!-- Logo + 功能下拉：卡片外層，無背景 -->
@@ -47,52 +96,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-type Feature = { label: string; value: string }
-
-//TODO: 透過slug選擇開放功能 如果全部開發完畢記得更換
-const FEATURES_BY_SLUG: Record<string, Feature[]> = {
-  "539": [
-    { label: "歷年開獎號碼", value: "history" },
-    { label: "分布走勢圖", value: "trend" }
-  ],
-  "big-lotto": [
-    { label: "歷年開獎號碼", value: "history" },
-    { label: "分布走勢圖", value: "trend" }
-  ],
-  "power-lotto": [{ label: "歷年開獎號碼", value: "history" }]
-}
-
-const DEFAULT_FEATURES: Feature[] = [{ label: "歷年開獎號碼", value: "history" }]
-
-const options = [10, 20, 30]
-
-const props = defineProps<{
-  logoSrc: string
-  gameName: string
-  title: string
-}>()
-
-const limit = defineModel<number>({ required: true })
-
-const router = useRouter()
-const route = useRoute()
-
-const features = computed(() => {
-  const slug = route.params.slug as string
-  return FEATURES_BY_SLUG[slug] ?? DEFAULT_FEATURES
-})
-
-const activeFeature = computed(() => route.path.split("/").pop() ?? "")
-
-const activeLabel = computed(() => features.value.find((f) => f.value === activeFeature.value)?.label)
-
-const featureOpen = ref(false)
-
-function selectFeature(value: string) {
-  featureOpen.value = false
-  const slug = route.params.slug as string
-  router.push(`/lotto/${slug}/${value}`)
-}
-</script>

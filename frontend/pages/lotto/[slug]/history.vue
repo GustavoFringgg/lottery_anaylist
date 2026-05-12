@@ -4,7 +4,8 @@ const route = useRoute()
 const slug = route.params.slug as string
 
 const VALID_SLUGS = ["539", "big-lotto", "power-lotto", "bingo", "49lotto", "39lotto", "4star", "3star"]
-if (!VALID_SLUGS.includes(slug)) {
+const isValidSlug = VALID_SLUGS.includes(slug)
+if (!isValidSlug) {
   if (import.meta.server) {
     await navigateTo("/", { redirectCode: 301 })
   } else {
@@ -47,5 +48,5 @@ useHead({
 </script>
 
 <template>
-  <LotteryHistory :slug="slug" :logoSrc="logoSrc" />
+  <LotteryHistory v-if="isValidSlug" :slug="slug" :logoSrc="logoSrc" />
 </template>
