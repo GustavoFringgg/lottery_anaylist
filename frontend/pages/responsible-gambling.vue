@@ -37,7 +37,6 @@ const orgs = [
     <h2 class="text-center font-black text-[20px] md:text-[50px] mb-8" style="color: #59adbc">關於理性投注 您該知道的4件事...</h2>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-6" style="margin-bottom: 32px">
       <div v-for="tip in tips" :key="tip.title" class="flex flex-col items-center gap-3">
-        <!-- 黃色卡片：flex-1 讓四張等高 -->
         <div
           class="w-full flex flex-col items-center justify-center px-5 gap-4 h-40 md:h-64"
           style="background-color: #ffe868; border-radius: 15px"
@@ -45,7 +44,6 @@ const orgs = [
           <img :src="tip.icon" :alt="tip.title" class="object-contain w-16 h-16 md:w-28 md:h-28" />
           <p class="font-bold" style="color: #379cad; font-size: 20px">{{ tip.title }}</p>
         </div>
-        <!-- 說明文字：卡片外 -->
         <p class="text-sm text-center leading-relaxed" style="color: #1a1a1a">
           <span v-for="(line, i) in tip.desc" :key="i" class="block text-[15px] md:text-[18px]" >{{ line }}</span>
         </p>

@@ -38,7 +38,7 @@ useHead({ title: "台灣彩券最新開獎號碼 - 專業分析熱點走勢圖" 
 const navCards = [
   { title: "支持公益\n理性投注", to: "/responsible-gambling", color: "green" },
   { title: "免責申明", to: "/disclaimer", color: "orange" },
-  { title: "隱私權保護政策", to: "/", color: "blue" }
+  { title: "隱私權保護政策", to: "/privacy-policy", color: "blue" }
 ]
 
 const cardGradient: Record<string, string> = {
