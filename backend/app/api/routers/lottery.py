@@ -6,6 +6,7 @@ from app.models.lottery import DrawsList,BingoExtra,Game
 from app.schemas.lottery import DrawResponse, DrawHistoryItem, BingoDrawHistoryItem, BingoResponse, DrawListResponse,DrawStatsItem,DrawStatsResponse
 from app.core.security import verify_api_key
 from collections import Counter
+from enum import Enum
 router = APIRouter()
 
 GAMES_WITH_SPECIAL = {5118, 5134}
@@ -30,7 +31,15 @@ def compute_stats(numbers:list[int])-> dict:
       }
     
 
-
+class LotterySlug(str, Enum):
+    lotto539 = "539"
+    big_lotto = "big-lotto"
+    power_lotto = "power-lotto"
+    bingo = "bingo"
+    lotto49 = "49lotto"
+    lotto39 = "39lotto"
+    star3 = "3star"
+    star4 = "4star"
 
 
 def get_special(game_code:int,numbers:list[int])-> int | None:
@@ -150,7 +159,7 @@ async def get_latest_bingo(db:AsyncSession = Depends(get_session)):
 
 
 @router.get('/stats/{slug}',response_model  = DrawStatsResponse,dependencies=[Depends(verify_api_key)])
-async def get_stats_by_slug(slug:str,limit:int = 10,db:AsyncSession = Depends(get_session)):
+async def get_stats_by_slug(slug:LotterySlug,limit:int = 10,db:AsyncSession = Depends(get_session)):
     limit = min(limit,30)
     game_result = await db.execute(select(Game).where(Game.slug == slug))
     game = game_result.scalars().first()
@@ -175,7 +184,7 @@ async def get_stats_by_slug(slug:str,limit:int = 10,db:AsyncSession = Depends(ge
                 game_code=draw.game_code,
                 term=draw.term,
                 draw_date=draw.draw_date,
-                numbers=numbers,
+                numbers=sorted(numbers),
                 special=special,
                 **compute_stats(numbers),
             ))
