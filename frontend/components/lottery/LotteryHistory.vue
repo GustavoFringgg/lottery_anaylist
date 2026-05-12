@@ -31,6 +31,16 @@ const rows = computed(() =>
 
 const hasSpecial = computed(() => rows.value.some((row) => row.special !== null))
 
+const DRAW_TITLE_MAP: Record<string, string> = {
+  "power-lotto": "第一區號碼 + 第二區號碼",
+  "big-lotto": "開獎號碼 + 特別號",
+  "539": "開獎號碼 (5個)",
+  bingo: "開獎號碼 + 超級獎號",
+  "49lotto": "開獎號碼 (6個)",
+  "39lotto": "開獎號碼 (5個)"
+}
+const drawTitle = computed(() => DRAW_TITLE_MAP[props.slug] ?? (hasSpecial.value ? "開獎號碼 + 特別號" : "開獎號碼 (5個)"))
+
 // 4. 分頁
 const totalPages = computed(() => Math.ceil(rows.value.length / PAGE_SIZE))
 
@@ -53,7 +63,7 @@ const pagedRows = computed(() => {
               <th class="py-6 w-[16.6%] border border-[#007979]" style="background: #ff4100">開獎期數</th>
               <th class="py-6 w-[16.6%] border border-[#007979]" style="background: #ff4100">開獎日期</th>
               <th class="py-6 border border-[#007979]" style="background: #2db38d">
-                {{ hasSpecial ? "開獎號碼 + 特別號" : "開獎號碼 (5個)" }}
+                {{ drawTitle }}
               </th>
             </tr>
           </thead>
