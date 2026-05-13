@@ -8,12 +8,12 @@ export const useBingoLatest = () => {
   let intervalTimer: ReturnType<typeof setInterval> | null = null
   let initialTimer: ReturnType<typeof setTimeout> | null = null
 
-  onMounted(() => {
-    const INTERVAL = 5 * 60 * 1000
-    const OFFSET = (2 * 60 + 20) * 1000 // 基準分鐘2/7/12...後20秒才打
+  const INTERVAL = 5 * 60 * 1000
+  const OFFSET = (2 * 60 + 20) * 1000 // 基準分鐘2/7/12...後20秒才打
+
+  function startPolling() {
     const now = new Date()
     const msUntilNextMark = INTERVAL - ((now.getTime() - OFFSET) % INTERVAL)
-
     initialTimer = setTimeout(() => {
       console.log("[Bingo] 整點5分自動更新", new Date().toLocaleTimeString())
       refresh()
@@ -22,11 +22,30 @@ export const useBingoLatest = () => {
         refresh()
       }, INTERVAL)
     }, msUntilNextMark)
+  }
+
+  function stopPolling() {
+    if (initialTimer) { clearTimeout(initialTimer); initialTimer = null }
+    if (intervalTimer) { clearInterval(intervalTimer); intervalTimer = null }
+  }
+
+  function onVisibilityChange() {
+    if (document.hidden) {
+      stopPolling()
+    } else {
+      refresh()
+      startPolling()
+    }
+  }
+
+  onMounted(() => {
+    startPolling()
+    document.addEventListener("visibilitychange", onVisibilityChange)
   })
 
   onUnmounted(() => {
-    if (initialTimer) clearTimeout(initialTimer)
-    if (intervalTimer) clearInterval(intervalTimer)
+    stopPolling()
+    document.removeEventListener("visibilitychange", onVisibilityChange)
   })
 
   const bingoCard = computed(() => {

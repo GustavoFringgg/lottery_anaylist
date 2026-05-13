@@ -1,4 +1,4 @@
-import type { ApiResponseData, BingoApiResponse, DrawsResponse } from "~/types/index"
+import type { ApiResponseData, BingoApiResponse, DrawsResponse, DrawStatsResponse } from "~/types/index"
 
 export const useLotteryApi = () => {
   const getLatest = () => $fetch<ApiResponseData[]>("/api/lottery/latest")
@@ -6,5 +6,8 @@ export const useLotteryApi = () => {
   const getBingoLatest = () => $fetch<BingoApiResponse>("/api/lottery/bingo_latest")
 
   const getDraws = (slug: string, limit: number) => $fetch<DrawsResponse>(`/api/lottery/draws/${slug}`, { query: { limit } })
-  return { getLatest, getBingoLatest, getDraws }
+
+  const getStats = (slug: string, limit: number) => $fetch<DrawStatsResponse>(`/api/lottery/stats/${slug}`, { query: { limit } })
+
+  return { getLatest, getBingoLatest, getDraws, getStats }
 }
