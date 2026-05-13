@@ -25,8 +25,9 @@ const orgs = [
 </script>
 
 <template>
+  <div>
   <!-- Hero 區 -->
-  <section class="w-full text-center" ">
+  <section class="w-full text-center">
     <p class="font-black mb-1" style="color: #ed8b2f;font-size: 25px;">投注不過度 助人又樂己</p>
     <h1 class="px-3 py-2 rounded font-black text-[20px] md:text-[67px]" style="color: #59adbc;">支持公益 理性投注</h1>
   </section>
@@ -96,5 +97,6 @@ const orgs = [
         </div>
       </div>
     </div>
+  </div>
   </div>
 </template>
