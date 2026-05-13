@@ -18,16 +18,16 @@ const gameName = computed(() => data.value?.name ?? "")
 const hasSpecial = computed(() => rows.value.some((row) => row.special !== null))
 
 const statHeaders = computed(() => {
-  const headers: { label: string }[] = [
-    { label: "開獎號碼" },
-    ...(hasSpecial.value ? [{ label: "特別號" }] : []),
-    { label: "單雙比例" },
-    { label: "和值" },
-    { label: "均值" },
-    { label: "同尾數" },
-    { label: "首尾差" },
-    { label: "尾數和" },
-    { label: "首數和" }
+  const headers: { label: string; width: string }[] = [
+    { label: "開獎號碼", width: "w-[198px] md:w-[408px]" },
+    ...(hasSpecial.value ? [{ label: "特別號", width: "w-[65px] md:w-[125px]" }] : []),
+    { label: "單雙比例", width: "w-[80px] md:w-[125px]" },
+    { label: "和值", width: "w-[65px] md:w-[125px]" },
+    { label: "均值", width: "w-[65px] md:w-[125px]" },
+    { label: "同尾數", width: "w-[90px] md:w-[150px]" },
+    { label: "首尾差", width: "w-[65px] md:w-[125px]" },
+    { label: "尾數和", width: "w-[65px] md:w-[125px]" },
+    { label: "首數和", width: "w-[65px] md:w-[125px]" }
   ]
   return headers.map((h, i) => ({ ...h, bg: i % 2 === 0 ? "#59adbc" : "#1e7888" }))
 })
@@ -48,19 +48,19 @@ const pagedRows = computed(() => {
     </div>
     <div class="overflow-x-auto">
       <div class="max-h-[793px] overflow-y-auto">
-        <table class="mx-auto" :style="{ borderCollapse: 'collapse', whiteSpace: 'nowrap' }">
+        <table class="mx-auto min-w-max" :style="{ borderCollapse: 'collapse', whiteSpace: 'nowrap' }">
           <thead>
             <tr style="color: white; text-align: center">
-              <th class="text-[12px] md:text-[18px]" style="background: #ff4100; border: 1px solid #1e7888; padding: 10px 0px">
+              <th class="text-[12px] md:text-[18px] w-[85px] md:w-[125px]" style="background: #ff4100; border: 1px solid #1e7888; padding: 10px 0px">
                 期數
               </th>
-              <th class="text-[12px] md:text-[18px]" style="background: #ff4100; border: 1px solid #1e7888; padding: 10px 0px">
+              <th class="text-[12px] md:text-[18px] w-[85px] md:w-[125px]" style="background: #ff4100; border: 1px solid #1e7888; padding: 10px 0px">
                 日期
               </th>
               <th
                 v-for="h in statHeaders"
                 :key="h.label"
-                class="text-[13px] md:text-[22px]"
+                :class="['text-[13px] md:text-[22px]', h.width]"
                 :style="`background: ${h.bg}; border: 1px solid #1e7888;`"
               >
                 {{ h.label }}
@@ -74,9 +74,13 @@ const pagedRows = computed(() => {
               class="text-center text-[13px] md:text-[24px] border-t border-[#007979]"
               :style="i % 2 === 0 ? 'background:#fff' : 'background:#a9d9ce'"
             >
-              <td class="text-[15px] md:text-[18px] h-[60px] md:h-[80px] text-[#2b2b2b] border border-[#007979]">{{ row.term }}</td>
-              <td class="text-[15px] md:text-[18px] text-[#2b2b2b] border border-[#007979]">{{ formatDate(row.draw_date).date }}</td>
-              <td class="border border-[#007979] w-[258px] md:w-[458px]">
+              <td class="text-[15px] md:text-[18px] h-[60px] md:h-[80px] text-[#2b2b2b] border border-[#007979]">
+                {{ row.term }}
+              </td>
+              <td class="text-[15px] md:text-[18px] text-[#2b2b2b] border border-[#007979]">
+                {{ formatDate(row.draw_date).date }}
+              </td>
+              <td class="border border-[#007979]">
                 <div class="flex items-center justify-center gap-[4px] md:gap-[10px]">
                   <span
                     v-for="n in row.numbers"
@@ -95,13 +99,13 @@ const pagedRows = computed(() => {
                   {{ String(row.special).padStart(2, "0") }}
                 </span>
               </td>
-              <td class="text-[15px] md:text-[23px] font-bold border border-[#007979] w-[110px] md:w-[120px]">{{ row.odd_even_ratio }}</td>
-              <td class="text-[15px] md:text-[23px] font-bold border border-[#007979] w-[110px] md:w-[125px]">{{ row.total_sum }}</td>
-              <td class="text-[15px] md:text-[23px] font-bold border border-[#007979] w-[110px] md:w-[125px]">{{ row.average.toFixed(1) }}</td>
-              <td class="text-[15px] md:text-[23px] font-bold border border-[#007979] w-[110px] md:w-[125px]">{{ row.same_tail }}</td>
-              <td class="text-[15px] md:text-[23px] font-bold border border-[#007979] w-[110px] md:w-[125px]">{{ row.head_tail_diff }}</td>
-              <td class="text-[15px] md:text-[23px] font-bold border border-[#007979] w-[110px] md:w-[125px]">{{ row.tail_sum }}</td>
-              <td class="text-[15px] md:text-[23px] font-bold border border-[#007979] w-[110px] md:w-[125px]">{{ row.head_sum }}</td>
+              <td class="text-[15px] md:text-[23px] font-bold border border-[#007979]">{{ row.odd_even_ratio }}</td>
+              <td class="text-[15px] md:text-[23px] font-bold border border-[#007979]">{{ row.total_sum }}</td>
+              <td class="text-[15px] md:text-[23px] font-bold border border-[#007979]">{{ row.average.toFixed(1) }}</td>
+              <td class="text-[15px] md:text-[23px] font-bold border border-[#007979]">{{ row.same_tail }}</td>
+              <td class="text-[15px] md:text-[23px] font-bold border border-[#007979]">{{ row.head_tail_diff }}</td>
+              <td class="text-[15px] md:text-[23px] font-bold border border-[#007979]">{{ row.tail_sum }}</td>
+              <td class="text-[15px] md:text-[23px] font-bold border border-[#007979]">{{ row.head_sum }}</td>
             </tr>
           </tbody>
         </table>

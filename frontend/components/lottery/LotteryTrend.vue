@@ -198,8 +198,8 @@ const chartOptions = {
         <table class="mx-auto" :style="{ borderCollapse: 'collapse', minWidth: tableWidth + 'px' }">
           <thead>
             <tr style="background: #ff4100; color: white; text-align: center">
-              <th style="width: 120px; border: 1px solid #1e7888; border-right: none; padding: 10px 0">期數</th>
-              <th style="width: 110px; border: 1px solid #1e7888; border-left: none; padding: 10px 0">日期</th>
+              <th style="border: 1px solid #1e7888; border-right: none; padding: 10px 0" class="md:w-[120px] w-[100px]">期數</th>
+              <th style="border: 1px solid #1e7888; border-left: none; padding: 10px 0" class="md:w-[120px] w-[100px]">日期</th>
               <th
                 v-for="n in numberRange"
                 :key="n"
