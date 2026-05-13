@@ -5,11 +5,13 @@ type Feature = { label: string; value: string }
 const FEATURES_BY_SLUG: Record<string, Feature[]> = {
   "539": [
     { label: "歷年開獎號碼", value: "history" },
-    { label: "分布走勢圖", value: "trend" }
+    { label: "分布走勢圖", value: "trend" },
+    { label: "各期統計分析", value: "stats" }
   ],
   "big-lotto": [
     { label: "歷年開獎號碼", value: "history" },
-    { label: "分布走勢圖", value: "trend" }
+    { label: "分布走勢圖", value: "trend" },
+    { label: "各期統計分析", value: "stats" }
   ],
   "power-lotto": [{ label: "歷年開獎號碼", value: "history" }]
 }

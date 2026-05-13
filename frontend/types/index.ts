@@ -47,3 +47,24 @@ export interface BingoApiResponse {
   lot_odd_even: string
   next_draw_date: string | null
 }
+
+interface DrawStatsItem {
+  game_code: number
+  term: string
+  draw_date: string // ISO datetime
+  numbers: number[] // 已排序
+  special: number | null
+  odd_even_ratio: string // e.g. "2:3"
+  total_sum: number
+  average: number // 使用 toFixed(2) 顯示
+  same_tail: string
+  head_tail_diff: number
+  tail_sum: number
+  head_sum: number
+}
+
+export interface DrawStatsResponse {
+  slug: string
+  name: string
+  draw_list: DrawStatsItem[]
+}
