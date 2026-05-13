@@ -32,6 +32,11 @@ const todayWeekday = new Date().getDay() //0~6
 const isDrawTody = (game: CardData) => game.draw_days?.includes(todayWeekday) ?? false
 const { featured: gamesFeatured, grid: gamesGrid } = useLotteryLatest()
 const { bingoCard } = useBingoLatest()
+// 只解構 bingoCard 整個 useBingoLatest() 都會跑過一次
+// - useAsyncData 打 API
+// - onMounted 註冊
+// - onUnmounted 註冊
+// - visibilitychange 監聽
 
 useHead({ title: "台灣彩券最新開獎號碼 - 專業分析熱點走勢圖" })
 
@@ -49,8 +54,8 @@ const cardGradient: Record<string, string> = {
 </script>
 
 <template>
-  <h1 class="sr-only">台灣彩券最新開獎號碼 - 專業分析熱點走勢圖</h1>
   <div class="space-y-3 flex flex-col w-full max-w-[1200px] mx-auto px-2 sm:px-4">
+    <h1 class="sr-only">台灣彩券最新開獎號碼 - 專業分析熱點走勢圖</h1>
     <!-- <div
       class="w-full flex flex-col sm:flex-row items-center sm:justify-center px-6 py-4 sm:py-0 gap-x-10 mb-[26px]"
       style="
