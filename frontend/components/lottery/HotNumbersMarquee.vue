@@ -3,7 +3,9 @@ const props = defineProps<{ slug?: string }>()
 
 const { fetchIfNeeded, getHotBySlug, hotCache } = useHotNumbers()
 
-await fetchIfNeeded()
+onMounted(async () => {
+  await fetchIfNeeded()
+})
 
 const displayItems = computed(() => {
   if (props.slug) {
