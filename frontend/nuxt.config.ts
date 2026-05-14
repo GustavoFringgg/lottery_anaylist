@@ -80,8 +80,15 @@ export default defineNuxtConfig({
         { rel: "preconnect", href: "https://fonts.googleapis.com" },
         { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "" },
         {
-          rel: "stylesheet",
-          href: "https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap"
+          rel: "preload",
+          as: "style",
+          href: "https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap",
+          onload: "this.rel='stylesheet'"
+        }
+      ],
+      noscript: [
+        {
+          innerHTML: `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap">`
         }
       ],
       script: [
