@@ -43,10 +43,10 @@ class DrawListResponse(BaseModel):
     draw_list: list[DrawHistoryItem | BingoDrawHistoryItem]
 
 class DrawStatsItem(DrawHistoryItem):
-    odd_even_ratio: str   # "2:3"
+    odd_even_ratio: str   # 單雙比例
     total_sum: int        # 和值
-    average: float        # 均值 (使用 float 前端使用 toFixed(2) 處理)
-    same_tail: str
+    average: float        # 均值 
+    same_tail: str        # 同尾數
     head_tail_diff: int   # 首尾差
     tail_sum: int         # 尾數和
     head_sum: int         # 首數和
@@ -56,4 +56,9 @@ class DrawStatsResponse(BaseModel):
     name: str
     draw_list: list[DrawStatsItem]
 
-
+class GameHotNumbers(BaseModel):
+    name: str
+    hot_numbers: list[int]
+    hot_special: list[int] | None = None 
+class HotNumbersResponse(BaseModel):
+    data:dict[str,GameHotNumbers]

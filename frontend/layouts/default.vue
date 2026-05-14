@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { menuItems } from '~/constants'
+import { menuItems } from "~/constants"
 const NuxtLinkComponent = resolveComponent("NuxtLink")
 const route = useRoute()
 </script>
@@ -36,7 +36,7 @@ const route = useRoute()
         </component>
       </nav>
     </header>
-
+    <HotNumbersMarquee />
     <!-- 首頁才顯示輪播 -->
     <AdCarousel v-if="route.path === '/'" />
 

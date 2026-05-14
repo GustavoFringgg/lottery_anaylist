@@ -48,7 +48,7 @@ export interface BingoApiResponse {
   next_draw_date: string | null
 }
 
-interface DrawStatsItem {
+export interface DrawStatsItem {
   game_code: number
   term: string
   draw_date: string // ISO datetime
@@ -67,4 +67,14 @@ export interface DrawStatsResponse {
   slug: string
   name: string
   draw_list: DrawStatsItem[]
+}
+
+export interface GameHotNumbers {
+  name: string
+  hot_numbers: number[]
+  hot_special: number[] | null
+}
+
+export interface HotNumbersResponse {
+  data: Record<string, GameHotNumbers>
 }
