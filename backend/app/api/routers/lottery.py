@@ -3,13 +3,14 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, desc
 from app.core.database import get_session
 from app.models.lottery import DrawsList,BingoExtra,Game
-from app.schemas.lottery import DrawResponse, DrawHistoryItem, BingoDrawHistoryItem, BingoResponse, DrawListResponse,DrawStatsItem,DrawStatsResponse
+from app.schemas.lottery import DrawResponse, DrawHistoryItem, BingoDrawHistoryItem, BingoResponse, DrawListResponse,DrawStatsItem, DrawStatsResponse, GameHotNumbers, HotNumbersResponse
 from app.core.security import verify_api_key
 from collections import Counter
 from enum import Enum
 router = APIRouter()
 
 GAMES_WITH_SPECIAL = {5118, 5134}
+HOT_GAME_CODES = {5118, 5120, 5134}
 
 def compute_stats(numbers:list[int])-> dict:
     n = len(numbers)
@@ -194,3 +195,39 @@ async def get_stats_by_slug(slug:LotterySlug,limit:int = 10,db:AsyncSession = De
         name=game.name,
         draw_list=draw_list,
     )
+
+#TODO:L
+@router.get('/hot-numbers',response_model = HotNumbersResponse, dependencies = [Depends(verify_api_key)])
+async def get_hot_numbers(db:AsyncSession = Depends(get_session)):
+    game_result = await db.execute(
+        select(Game).where(Game.game_code.in_(HOT_GAME_CODES)) 
+    )
+    games = game_result.scalars().all() 
+    data = {}
+    for game in games:
+        draws_result = await db.execute(
+            select(DrawsList)
+            .where(DrawsList.game_code == game.game_code)
+            .order_by(desc(DrawsList.draw_date))
+            .limit(10)
+        )
+        draws = draws_result.scalars().all()
+        freq: Counter = Counter() 
+        special_freq: Counter = Counter()
+
+        for draw in draws:
+            special = get_special(draw.game_code,draw.numbers)
+            numbers = draw.numbers[:-1] if special is not None else draw.numbers 
+            freq.update(numbers) 
+            if game.game_code == 5134 and special is not None:
+                special_freq.update([special])
+        hot = sorted(n for n, count in freq.items() if count >=3)
+        hot_special = sorted(n for n ,count in special_freq.items() if count>=3) if game.game_code == 5134 else None
+        
+        data[game.slug] = GameHotNumbers(
+            name = game.name,
+            hot_numbers = hot,
+            hot_special = hot_special if hot_special else None,
+        )
+
+    return HotNumbersResponse(data = data )
