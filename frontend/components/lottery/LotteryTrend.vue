@@ -3,7 +3,9 @@ import { Bar } from "vue-chartjs"
 import { formatDate } from "~/utils/formatDate"
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Tooltip, Legend } from "chart.js"
 import ChartDataLabels from "chartjs-plugin-datalabels"
-ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend, ChartDataLabels)
+if (import.meta.client) {
+  ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend, ChartDataLabels)
+}
 
 const props = defineProps<{
   slug: string
@@ -234,7 +236,9 @@ const chartOptions = {
       </div>
       <div class="overflow-x-auto">
         <div class="mx-auto" :style="{ width: tableWidth + 'px', height: '293px' }">
-          <Bar :data="chartData" :options="chartOptions" :plugins="[lottoBallPlugin]" />
+          <ClientOnly>
+            <Bar :data="chartData" :options="chartOptions" :plugins="[lottoBallPlugin]" />
+          </ClientOnly>
         </div>
       </div>
     </div>
