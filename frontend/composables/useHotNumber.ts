@@ -1,10 +1,9 @@
 import type { HotNumbersResponse, GameHotNumbers } from "~/types"
 
 //TODO: L
-const hotCache = useState<HotNumbersResponse["data"] | null>("hotNumbers", () => null)
-
 //TODO:L
 export const useHotNumbers = () => {
+  const hotCache = useState<HotNumbersResponse["data"] | null>("hotNumbers", () => null)
   async function fetchIfNeeded() {
     if (hotCache.value) return
 
