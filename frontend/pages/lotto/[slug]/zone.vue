@@ -3,7 +3,8 @@
 const route = useRoute()
 const slug = route.params.slug as string
 
-const VALID_SLUGS = ["539", "big-lotto", "power-lotto"]
+// 如果不要開放使用 就在VALID_SLUGS[]
+const VALID_SLUGS: string[] = []
 const isValidSlug = VALID_SLUGS.includes(slug)
 if (!isValidSlug) {
   if (import.meta.server) {
@@ -38,15 +39,13 @@ const NAME_MAP: Record<string, string> = {
 const gameName = NAME_MAP[slug] ?? "台灣彩券"
 
 useSeoMeta({
-  title: `${gameName}歷史開獎號開雙比分析圖 - 539樂透分析`,
-  description: `查詢${gameName}完整歷史開獎號碼開雙比分析圖，僅供參考。`,
-  ogUrl: `https://www.539lto.co/lotto/${slug}/odd-even`
+  title: `${gameName}歷史開獎號區分佈圖 - 539樂透分析`,
+  description: `查詢${gameName}完整歷史開獎號碼區分佈圖，僅供參考。`,
+  ogUrl: `https://www.539lto.co/lotto/${slug}/zone`
 })
 useHead({
-  link: [{ rel: "canonical", href: `https://www.539lto.co/lotto/${slug}/odd-even` }]
+  link: [{ rel: "canonical", href: `https://www.539lto.co/lotto/${slug}/zone` }]
 })
 </script>
 
-<template>
-  <LazyLotteryOddEven v-if="isValidSlug" :slug="slug" :logoSrc="logoSrc" />
-</template>
+<template>zone7</template>

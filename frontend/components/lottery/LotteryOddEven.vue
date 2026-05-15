@@ -65,6 +65,10 @@ const oddEvenStats = computed(() => {
   return { posOdd, posEven, specialOdd, specialEven, totalOdd, totalEven }
 })
 
+function altBg(index: number) {
+  return index % 2 === 0 ? "#59adbc" : "#1e7888"
+}
+
 const chartLabels = computed(() => {
   const labels = []
   for (let i = 1; i <= positionCount.value; i++) labels.push(`基${i}`)
@@ -128,13 +132,13 @@ const chartOptions = {
               <th class="text-[12px] md:text-[18px] md:w-[120px] w-[100px]" style="background: #ff4100; border: 1px solid #1e7888; padding: 10px 0px">
                 開獎日期
               </th>
-              <th class="text-[13px] md:text-[22px] w-[198px] md:w-[408px]" style="background: #59adbc; border: 1px solid #1e7888; padding: 10px 0px">
+              <th class="text-[13px] md:text-[22px] w-[198px] md:w-[408px]" :style="`background: ${altBg(0)}; border: 1px solid #1e7888; padding: 10px 0px`">
                 開獎號碼
               </th>
               <th
                 v-if="hasSpecial"
                 class="text-[13px] md:text-[22px] w-[65px] md:w-[100px]"
-                style="background: #1e7888; border: 1px solid #1e7888; padding: 10px 0px"
+                :style="`background: ${altBg(1)}; border: 1px solid #1e7888; padding: 10px 0px`"
               >
                 特別號
               </th>
@@ -142,18 +146,21 @@ const chartOptions = {
                 v-for="i in positionCount"
                 :key="i"
                 class="text-[13px] md:text-[22px] w-[65px] md:w-[100px]"
-                :style="`background: ${i % 2 === 0 ? '#1e7888' : '#59adbc'}; border: 1px solid #1e7888; padding: 10px 0px`"
+                :style="`background: ${altBg((hasSpecial ? 1 : 0) + i)}; border: 1px solid #1e7888; padding: 10px 0px`"
               >
                 基{{ i }}
               </th>
               <th
                 v-if="hasSpecial"
                 class="text-[13px] md:text-[22px] w-[65px] md:w-[100px]"
-                style="background: #1e7888; border: 1px solid #1e7888; padding: 10px 0px"
+                :style="`background: ${altBg(positionCount + 2)}; border: 1px solid #1e7888; padding: 10px 0px`"
               >
                 特
               </th>
-              <th class="text-[13px] md:text-[22px] w-[80px] md:w-[125px]" style="background: #59adbc; border: 1px solid #1e7888; padding: 10px 0px">
+              <th
+                class="text-[13px] md:text-[22px] w-[80px] md:w-[125px]"
+                :style="`background: ${altBg(positionCount + (hasSpecial ? 3 : 1))}; border: 1px solid #1e7888; padding: 10px 0px`"
+              >
                 單雙比
               </th>
             </tr>
