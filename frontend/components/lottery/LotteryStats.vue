@@ -47,8 +47,8 @@ const pagedRows = computed(() => {
       <LotteryPageHeader :logoSrc="logoSrc" :gameName="gameName" title="各期統計分析" v-model="limit" />
     </div>
     <div class="overflow-x-auto">
-      <div class="max-h-[793px] overflow-y-auto">
-        <table class="mx-auto min-w-max" :style="{ borderCollapse: 'collapse', whiteSpace: 'nowrap' }">
+      <div class="max-h-[793px] overflow-y-auto max-w-max mx-auto p-2">
+        <table class="min-w-max" :style="{ borderCollapse: 'collapse', whiteSpace: 'nowrap' }">
           <thead>
             <tr style="color: white; text-align: center">
               <th class="text-[12px] md:text-[18px] w-[85px] md:w-[125px]" style="background: #ff4100; border: 1px solid #1e7888; padding: 10px 0px">
@@ -114,3 +114,19 @@ const pagedRows = computed(() => {
     <Pagination v-if="totalPages > 1" v-model:currentPage="currentPage" :totalPages="totalPages" />
   </div>
 </template>
+
+<style scoped>
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f0ede6;
+}
+::-webkit-scrollbar-thumb {
+  background: #59adbc;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #1e7888;
+}
+</style>
