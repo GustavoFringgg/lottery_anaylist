@@ -32,7 +32,7 @@ withDefaults(defineProps<Props>(), {
       <NuxtImg
         src="/images/logos/bingobingo.png"
         alt="BingoBingo"
-        width="230"
+        width="250"
         loading="lazy"
         class="w-[230px] h-[110px] sm:w-[250px] sm:h-[130px] object-contain"
       />

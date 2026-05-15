@@ -42,7 +42,7 @@ const orgs = [
             class="w-full flex flex-col items-center justify-center px-5 gap-4 h-40 md:h-64"
             style="background-color: #ffe868; border-radius: 15px"
           >
-            <NuxtImg :src="tip.icon" :alt="tip.title" width="112" loading="lazy" class="object-contain w-16 h-16 md:w-28 md:h-28" />
+            <NuxtImg :src="tip.icon" :alt="tip.title" width="120" loading="lazy" class="object-contain w-16 h-16 md:w-28 md:h-28" />
             <p class="font-bold" style="color: #379cad; font-size: 20px">{{ tip.title }}</p>
           </div>
           <p class="text-sm text-center leading-relaxed" style="color: #1a1a1a">
