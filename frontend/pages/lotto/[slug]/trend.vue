@@ -37,8 +37,8 @@ const NAME_MAP: Record<string, string> = {
 const gameName = NAME_MAP[slug] ?? "台灣彩券"
 
 useSeoMeta({
-  title: `${gameName}號碼分布走勢圖 - 539樂透分析`,
-  description: `${gameName}歷史開獎號碼分布走勢圖，視覺化呈現各號碼出現頻率與趨勢，僅供參考。`,
+  title: `${gameName}各期開獎號碼分布走勢圖 - 539樂透分析`,
+  description: `${gameName}歷史開獎號碼分布走勢圖，視覺化呈現各號碼出現頻率與趨勢，僅供參考`,
   ogUrl: `https://www.539lto.co/lotto/${slug}/trend`
 })
 useHead({

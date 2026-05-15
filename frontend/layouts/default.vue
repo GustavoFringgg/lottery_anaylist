@@ -55,9 +55,12 @@ const route = useRoute()
       <slot />
     </main>
 
-    <div class="text-center text-xl text-gray-500 px-4 py-3 leading-relaxed">
+    <div class="text-center text-m md:text-xl text-gray-500 px-4 py-3 leading-relaxed">
       <p>網站提供公益彩券開獎結果資訊與數據統計分析，僅供參考。所有開獎資訊應以官方公告為準。</p>
-      <p>投注不過度，助人又樂己。未滿18歲不得購買或兌領彩券。</p>
+      <p>
+        投注不過度，助人又樂己。
+        <strong>未滿18歲不得購買或兌領彩券。</strong>
+      </p>
     </div>
 
     <footer class="py-4 text-center text-xs text-white" style="background-color: #59adbc"></footer>

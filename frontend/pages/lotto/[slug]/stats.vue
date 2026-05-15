@@ -37,8 +37,8 @@ const NAME_MAP: Record<string, string> = {
 const gameName = NAME_MAP[slug] ?? "台灣彩券"
 
 useSeoMeta({
-  title: `${gameName}統計分析 - 539樂透分析`,
-  description: `查詢${gameName}各期統計數據，包含單雙比例、和值、均值等分析，僅供參考。`,
+  title: `${gameName}各期開獎號碼統計分析 - 539樂透分析`,
+  description: `查詢${gameName}各期統計數據，包含單雙比例、和值、均值、同尾數、首尾差、尾數和、首數和等專業分析，僅供參考。`,
   ogUrl: `https://www.539lto.co/lotto/${slug}/stats`
 })
 useHead({
@@ -48,6 +48,4 @@ useHead({
 
 <template>
   <LazyLotteryStats v-if="isValidSlug" :slug="slug" :logoSrc="logoSrc" />
-  <!-- TODO: LotteryStats component -->
-  <!-- stats page - {{ slug }} -->
 </template>
