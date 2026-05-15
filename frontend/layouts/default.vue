@@ -43,7 +43,7 @@ const route = useRoute()
         </component>
       </nav>
     </header>
-    <HotNumbersMarquee />
+    <HotNumbersMarquee :slug="(route.params.slug as string) || undefined" />
     <!-- 首頁才顯示輪播 -->
     <AdCarousel v-if="route.path === '/'" />
 
