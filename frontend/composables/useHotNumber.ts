@@ -4,10 +4,11 @@ import type { HotNumbersResponse, GameHotNumbers } from "~/types"
 export const useHotNumbers = () => {
   const hotCache = useState<HotNumbersResponse["data"] | null>("hotNumbers", () => null)
   async function fetchIfNeeded() {
-    if (hotCache.value) return
+    if (hotCache.value) return hotCache.value
 
     const data = await $fetch<HotNumbersResponse>("/api/lottery/hot-numbers")
     hotCache.value = data.data
+    return hotCache.value
   }
   function getHotBySlug(slug: string): GameHotNumbers | null {
     return hotCache.value?.[slug] ?? null
