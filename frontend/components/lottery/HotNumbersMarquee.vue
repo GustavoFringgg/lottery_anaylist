@@ -25,8 +25,8 @@ const displayItems = computed(() => {
 <template>
   <div
     v-if="displayItems.length"
-    class="w-full overflow-hidden flex items-center h-[60px] md:h-[140px]"
-    style="background: linear-gradient(to bottom, #59adbc, #caf7ff)"
+    class="w-full overflow-hidden flex items-center h-[60px] md:h-[100px]"
+    style="background: linear-gradient(to bottom, #95c4cd, #caf7ff)"
   >
     <div class="animate-marquee whitespace-nowrap">
       <template v-for="i in 2" :key="i">

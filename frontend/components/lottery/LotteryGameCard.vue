@@ -6,9 +6,7 @@ const props = defineProps<{ game: CardData; fullWidth?: boolean }>()
 
 const sortMode = ref<"draw" | "size">("draw")
 
-const displayNumbers = computed(() =>
-  sortMode.value === "size" ? [...props.game.numbers].sort((a, b) => a - b) : props.game.numbers
-)
+const displayNumbers = computed(() => (sortMode.value === "size" ? [...props.game.numbers].sort((a, b) => a - b) : props.game.numbers))
 
 const gridStyle = computed(() => {
   const total = props.game.numbers.length + (props.game.special_number !== null ? 1 : 0)
@@ -39,13 +37,10 @@ const gridStyle = computed(() => {
 </script>
 
 <template>
-  <div
-    class="game-card flex flex-col w-full relative"
-    :style="{ backgroundColor: game.bgColor ?? '#ffffff', borderRadius: '5px' }"
-  >
+  <div class="game-card flex flex-col w-full relative" :style="{ backgroundColor: game.bgColor ?? '#ffffff', borderRadius: '5px' }">
     <div class="absolute top-1 left-1 sm:top-1 sm:left-3"><slot /></div>
     <div class="flex justify-center pt-4 pb-2">
-      <img v-if="game.logo" :src="game.logo" :alt="game.name" loading="lazy" class="w-[200px] h-[80px] object-contain" />
+      <NuxtImg v-if="game.logo" :src="game.logo" :alt="game.name" width="200" loading="lazy" class="w-[200px] h-[80px] object-contain" />
     </div>
     <!-- Draw info bar -->
     <div :class="fullWidth ? 'sm:mx-[100px]' : ''">
@@ -59,10 +54,7 @@ const gridStyle = computed(() => {
     </div>
 
     <!-- Balls -->
-    <div
-      class="grid justify-center gap-x-[10px] sm:gap-x-[40px] gap-y-[15px] sm:gap-y-[51px] px-4 sm:px-6 py-4"
-      :style="gridStyle"
-    >
+    <div class="grid justify-center gap-x-[10px] sm:gap-x-[40px] gap-y-[15px] sm:gap-y-[51px] px-4 sm:px-6 py-4" :style="gridStyle">
       <div v-for="(num, i) in displayNumbers" :key="i" class="flex flex-col items-center w-[55px]">
         <LotteryBall :number="num" type="normal" size="md" />
       </div>

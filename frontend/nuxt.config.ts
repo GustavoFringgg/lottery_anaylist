@@ -2,7 +2,12 @@ export default defineNuxtConfig({
   compatibilityDate: "2026-04-09", //告訴 Nuxt「以這個日期的版本行為為準」，避免 Nuxt 升版後自動採用破壞性的新預設值
   devtools: { enabled: true }, //開啟右下角的 Nuxt DevTools（就是你截圖看到的那個工具列）
 
-  modules: ["@nuxtjs/tailwindcss", "@nuxtjs/sitemap"],
+  modules: ["@nuxtjs/tailwindcss", "@nuxtjs/sitemap", "@nuxt/image"],
+
+  image: {
+    quality: 80,
+    format: ["webp"]
+  },
 
   components: {
     dirs: [{ path: "~/components", pathPrefix: false }]
@@ -49,8 +54,7 @@ export default defineNuxtConfig({
         },
         {
           name: "keywords",
-          content:
-            "大樂透,威力彩,今彩539,台彩,全民i彩券,BingoBingo,39樂合彩,49樂合彩,3星彩,4星彩,開獎號碼,號碼統計,歷史開獎,數據分析"
+          content: "大樂透,威力彩,今彩539,台彩,全民i彩券,BingoBingo,39樂合彩,49樂合彩,3星彩,4星彩,開獎號碼,號碼統計,歷史開獎,數據分析"
         },
         { name: "robots", content: "follow, index, max-snippet:-1, max-image-preview:large" },
         { name: "google-site-verification", content: "6ITddVFWHs0TBPCXs_lf8yG-U0C7AEqyz1jrbZ_3_Ko" },
@@ -60,8 +64,7 @@ export default defineNuxtConfig({
         { property: "og:title", content: "台彩分析 - 即時開獎資訊" },
         {
           property: "og:description",
-          content:
-            "提供今彩539、大樂透、威力彩、39樂合彩、49樂合彩、3星彩、4星彩、BingoBingo 即時開獎號碼，歷史數據分析與號碼統計。"
+          content: "提供今彩539、大樂透、威力彩、39樂合彩、49樂合彩、3星彩、4星彩、BingoBingo 即時開獎號碼，歷史數據分析與號碼統計。"
         },
         { property: "og:url", content: "https://www.539lto.co/" },
         { property: "og:image", content: "https://www.539lto.co/images/logos/favicon.png" },
@@ -69,8 +72,7 @@ export default defineNuxtConfig({
         { name: "twitter:title", content: "台彩分析 - 即時開獎資訊" },
         {
           name: "twitter:description",
-          content:
-            "提供今彩539、大樂透、威力彩、39樂合彩、49樂合彩、3星彩、4星彩、BingoBingo 即時開獎號碼，歷史數據分析與號碼統計。"
+          content: "提供今彩539、大樂透、威力彩、39樂合彩、49樂合彩、3星彩、4星彩、BingoBingo 即時開獎號碼，歷史數據分析與號碼統計。"
         },
         { name: "twitter:image", content: "https://www.539lto.co/images/logos/favicon.png" }
       ],
@@ -113,5 +115,6 @@ export default defineNuxtConfig({
     }
   },
 
-  ssr: process.env.NODE_ENV !== "development"
+  // ssr: process.env.NODE_ENV !== "development"
+  ssr: true
 })

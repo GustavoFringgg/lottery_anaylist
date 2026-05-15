@@ -54,7 +54,7 @@ function selectFeature(value: string) {
     <!-- Logo + 功能下拉：卡片外層，無背景 -->
     <div class="flex flex-col sm:flex-row items-center justify-between gap-3 mb-4">
       <h1 class="sr-only">{{ gameName }}</h1>
-      <img :src="logoSrc" :alt="gameName" class="h-[61px] sm:h-[80px] w-auto object-contain" />
+      <NuxtImg :src="logoSrc" :alt="gameName" width="200" loading="eager" class="h-[61px] sm:h-[80px] w-auto object-contain" />
 
       <div class="relative w-full sm:w-auto">
         <button

@@ -29,9 +29,10 @@ withDefaults(defineProps<Props>(), {
 
     <!-- Logo -->
     <div class="flex justify-center pt-4 pb-2">
-      <img
+      <NuxtImg
         src="/images/logos/bingobingo.png"
         alt="BingoBingo"
+        width="230"
         loading="lazy"
         class="w-[230px] h-[110px] sm:w-[250px] sm:h-[130px] object-contain"
       />
