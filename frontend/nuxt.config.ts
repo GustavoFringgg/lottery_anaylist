@@ -43,6 +43,7 @@ export default defineNuxtConfig({
   // app index.html head 內容
   app: {
     head: {
+      htmlAttrs: { lang: "zh-TW" },
       title: "台灣彩券最新開獎號碼 - 專業分析熱點走勢圖",
       meta: [
         { charset: "utf-8" },

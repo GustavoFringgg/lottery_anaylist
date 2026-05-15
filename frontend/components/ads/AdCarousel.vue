@@ -58,16 +58,6 @@ onUnmounted(() => clearInterval(timer))
           </picture>
         </div>
       </TransitionGroup>
-
-      <div class="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2">
-        <button
-          v-for="(_, i) in slides"
-          :key="i"
-          class="w-2 h-2 rounded-full transition"
-          :style="current === i ? 'background:#fff' : 'background:rgba(255,255,255,0.4)'"
-          @click.stop="current = i"
-        />
-      </div>
     </div>
   </div>
 </template>
