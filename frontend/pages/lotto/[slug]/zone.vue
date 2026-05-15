@@ -1,8 +1,10 @@
 <script setup lang="ts">
+//TODO: 這裏思考是否可以合併
 const route = useRoute()
 const slug = route.params.slug as string
 
-const VALID_SLUGS = ["539", "big-lotto", "power-lotto"]
+// 如果不要開放使用 就在VALID_SLUGS[]
+const VALID_SLUGS: string[] = []
 const isValidSlug = VALID_SLUGS.includes(slug)
 if (!isValidSlug) {
   if (import.meta.server) {
@@ -37,15 +39,13 @@ const NAME_MAP: Record<string, string> = {
 const gameName = NAME_MAP[slug] ?? "台灣彩券"
 
 useSeoMeta({
-  title: `${gameName}各期開獎號碼統計分析 - 539樂透分析`,
-  description: `查詢${gameName}各期統計數據，包含單雙比例、和值、均值、同尾數、首尾差、尾數和、首數和等專業分析，僅供參考。`,
-  ogUrl: `https://www.539lto.co/lotto/${slug}/stats`
+  title: `${gameName}歷史開獎號區分佈圖 - 539樂透分析`,
+  description: `查詢${gameName}完整歷史開獎號碼區分佈圖，僅供參考。`,
+  ogUrl: `https://www.539lto.co/lotto/${slug}/zone`
 })
 useHead({
-  link: [{ rel: "canonical", href: `https://www.539lto.co/lotto/${slug}/stats` }]
+  link: [{ rel: "canonical", href: `https://www.539lto.co/lotto/${slug}/zone` }]
 })
 </script>
 
-<template>
-  <LazyLotteryStats v-if="isValidSlug" :slug="slug" :logoSrc="logoSrc" />
-</template>
+<template>zone7</template>

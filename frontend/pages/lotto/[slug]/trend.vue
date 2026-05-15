@@ -2,7 +2,7 @@
 const route = useRoute()
 const slug = route.params.slug as string
 
-const VALID_SLUGS = ["539", "big-lotto", "power-lotto", "bingo", "49lotto", "39lotto", "4star", "3star"]
+const VALID_SLUGS = ["539", "big-lotto", "power-lotto"]
 const isValidSlug = VALID_SLUGS.includes(slug)
 if (!isValidSlug) {
   if (import.meta.server) {
@@ -37,8 +37,8 @@ const NAME_MAP: Record<string, string> = {
 const gameName = NAME_MAP[slug] ?? "台灣彩券"
 
 useSeoMeta({
-  title: `${gameName}號碼分布走勢圖 - 539樂透分析`,
-  description: `${gameName}歷史開獎號碼分布走勢圖，視覺化呈現各號碼出現頻率與趨勢，僅供參考。`,
+  title: `${gameName}各期開獎號碼分布走勢圖 - 539樂透分析`,
+  description: `${gameName}歷史開獎號碼分布走勢圖，視覺化呈現各號碼出現頻率與趨勢，僅供參考`,
   ogUrl: `https://www.539lto.co/lotto/${slug}/trend`
 })
 useHead({

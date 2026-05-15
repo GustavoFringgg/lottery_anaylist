@@ -57,6 +57,6 @@ const displayItems = computed(() => {
 }
 .animate-marquee {
   display: inline-block;
-  animation: marquee 40s linear infinite;
+  animation: marquee 25s linear infinite;
 }
 </style>
