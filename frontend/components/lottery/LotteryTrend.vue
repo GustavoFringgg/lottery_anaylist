@@ -196,12 +196,12 @@ const chartOptions = {
       <LotteryPageHeader :logoSrc="logoSrc" :gameName="gameName" title="分布走勢圖" v-model="limit" />
     </div>
     <div class="overflow-x-auto">
-      <div class="mx-auto w-full max-w-[1700px] max-h-[508px] overflow-y-auto">
+      <div class="mx-auto max-w-max max-h-[508px] overflow-y-auto p-2">
         <table class="mx-auto" :style="{ borderCollapse: 'collapse', minWidth: tableWidth + 'px' }">
           <thead>
             <tr style="background: #ff4100; color: white; text-align: center">
-              <th style="border: 1px solid #1e7888; border-right: none; padding: 10px 0" class="md:w-[120px] w-[100px]">期數</th>
-              <th style="border: 1px solid #1e7888; border-left: none; padding: 10px 0" class="md:w-[120px] w-[100px]">日期</th>
+              <th style="border: 1px solid #1e7888; border-right: none; padding: 10px 0" class="md:w-[120px] w-[100px]">開獎期數</th>
+              <th style="border: 1px solid #1e7888; border-left: none; padding: 10px 0" class="md:w-[120px] w-[100px]">開獎日期</th>
               <th
                 v-for="n in numberRange"
                 :key="n"

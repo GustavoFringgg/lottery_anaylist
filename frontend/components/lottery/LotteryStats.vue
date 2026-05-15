@@ -52,10 +52,10 @@ const pagedRows = computed(() => {
           <thead>
             <tr style="color: white; text-align: center">
               <th class="text-[12px] md:text-[18px] w-[85px] md:w-[125px]" style="background: #ff4100; border: 1px solid #1e7888; padding: 10px 0px">
-                期數
+                開獎期數
               </th>
               <th class="text-[12px] md:text-[18px] w-[85px] md:w-[125px]" style="background: #ff4100; border: 1px solid #1e7888; padding: 10px 0px">
-                日期
+                開獎日期
               </th>
               <th
                 v-for="h in statHeaders"

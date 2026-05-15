@@ -1,4 +1,5 @@
 <script setup lang="ts">
+//TODO: 這裏思考是否可以合併
 const route = useRoute()
 const slug = route.params.slug as string
 
@@ -37,15 +38,15 @@ const NAME_MAP: Record<string, string> = {
 const gameName = NAME_MAP[slug] ?? "台灣彩券"
 
 useSeoMeta({
-  title: `${gameName}各期開獎號碼統計分析 - 539樂透分析`,
-  description: `查詢${gameName}各期統計數據，包含單雙比例、和值、均值、同尾數、首尾差、尾數和、首數和等專業分析，僅供參考。`,
-  ogUrl: `https://www.539lto.co/lotto/${slug}/stats`
+  title: `${gameName}歷史開獎號開雙比分析圖 - 539樂透分析`,
+  description: `查詢${gameName}完整歷史開獎號碼開雙比分析圖，僅供參考。`,
+  ogUrl: `https://www.539lto.co/lotto/${slug}/odd-even`
 })
 useHead({
-  link: [{ rel: "canonical", href: `https://www.539lto.co/lotto/${slug}/stats` }]
+  link: [{ rel: "canonical", href: `https://www.539lto.co/lotto/${slug}/odd-even` }]
 })
 </script>
 
 <template>
-  <LazyLotteryStats v-if="isValidSlug" :slug="slug" :logoSrc="logoSrc" />
+  <LazyLotteryOddEven v-if="isValidSlug" :slug="slug" :logoSrc="logoSrc" />
 </template>
