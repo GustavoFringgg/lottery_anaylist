@@ -11,7 +11,13 @@ const route = useRoute()
       <!-- 主 Logo -->
       <div class="flex items-center justify-center py-2.5">
         <NuxtLink to="/">
-          <img src="../public/images/logos/539lotto_header.png" alt="539樂翻天" class="h-[44px] sm:h-[90px] w-auto object-contain" />
+          <NuxtImg
+            src="/images/logos/539lotto_header.png"
+            alt="539樂翻天"
+            width="300"
+            loading="eager"
+            class="h-[44px] sm:h-[90px] w-auto object-contain"
+          />
         </NuxtLink>
       </div>
       <!-- 白色分隔線 -->
@@ -26,9 +32,10 @@ const route = useRoute()
           :to="item.to || undefined"
           class="flex flex-col items-center gap-1 group"
         >
-          <img
+          <NuxtImg
             :src="item.logo"
             :alt="item.label"
+            width="120"
             loading="lazy"
             class="w-[120px] h-[70px] object-contain group-hover:opacity-80 transition-opacity"
           />

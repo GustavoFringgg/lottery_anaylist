@@ -1,6 +1,5 @@
 import type { HotNumbersResponse, GameHotNumbers } from "~/types"
 
-//TODO: L
 //TODO:L
 export const useHotNumbers = () => {
   const hotCache = useState<HotNumbersResponse["data"] | null>("hotNumbers", () => null)
