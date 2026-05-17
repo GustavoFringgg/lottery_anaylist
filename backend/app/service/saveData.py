@@ -2,6 +2,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.models.lottery import DrawsList, BingoExtra
 from sqlalchemy import select
 
+#TODO:TEST 測重複資料是否正確跳過（不重複寫入），以及 BingoExtra 只在 game_code==1102 時建立
+#TODO:L
 async def save_draws(session: AsyncSession, draws: list[dict]):
     for draw in draws:
         existing = await session.execute(

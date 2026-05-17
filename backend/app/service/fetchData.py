@@ -43,6 +43,7 @@ async def fetch_last_number() -> dict:
                 return data["content"]
 
 
+#TODO:TEST 日期格式有兩種（12碼/8碼），測 parsing 邏輯是否依長度正確分支
 async def fetch_next_draw_date() -> dict:
     async for attempt in AsyncRetrying(
         retry=retry_if_exception_type(httpx.TimeoutException),
