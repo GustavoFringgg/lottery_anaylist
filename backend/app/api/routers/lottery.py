@@ -12,6 +12,8 @@ router = APIRouter()
 GAMES_WITH_SPECIAL = {5118, 5134}
 HOT_GAME_CODES = {5118, 5120, 5134}
 
+#TODO:TEST 純函式，最值得測：奇偶比、同尾數、頭尾差邏輯是否正確
+#TODO:L
 def compute_stats(numbers:list[int])-> dict:
     n = len(numbers)
     odds = sum(1 for x in numbers if  x % 2 != 0)
@@ -43,6 +45,8 @@ class LotterySlug(str, Enum):
     star4 = "4star"
 
 
+#TODO:TEST 測不同 game_code 是否正確取出 special，以及非特殊彩種回傳 None
+#TODO:L
 def get_special(game_code:int,numbers:list[int])-> int | None:
     if game_code in GAMES_WITH_SPECIAL:
         return numbers[-1]
@@ -73,6 +77,7 @@ async def get_latest(db: AsyncSession = Depends(get_session)):
 
     return draw_list
 
+#TODO:L
 @router.get("/draws/{slug}",response_model = DrawListResponse,dependencies=[Depends(verify_api_key)])
 async def get_draws_by_slug(
     slug:str,limit:int=10,
@@ -131,6 +136,7 @@ async def get_draws_by_slug(
     )
 
 
+#TODO:L
 @router.get('/bingo/latest', response_model = BingoResponse,dependencies=[Depends(verify_api_key)])
 async def get_latest_bingo(db:AsyncSession = Depends(get_session)):
     result = await db.execute(
@@ -158,7 +164,7 @@ async def get_latest_bingo(db:AsyncSession = Depends(get_session)):
     )
 
 
-
+#TODO:L
 @router.get('/stats/{slug}',response_model  = DrawStatsResponse,dependencies=[Depends(verify_api_key)])
 async def get_stats_by_slug(slug:LotterySlug,limit:int = 10,db:AsyncSession = Depends(get_session)):
     limit = min(limit,30)
