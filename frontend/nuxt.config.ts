@@ -116,6 +116,12 @@ export default defineNuxtConfig({
     }
   },
 
+  vite: {
+    optimizeDeps: {
+      include: ["@vue/devtools-core", "@vue/devtools-kit", "chart.js", "chartjs-plugin-datalabels", "vue-chartjs"]
+    }
+  },
+
   // ssr: process.env.NODE_ENV !== "development"
   ssr: true
 })
