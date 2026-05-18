@@ -32,7 +32,7 @@ const seconds = ref(0)
 const todayWeekday = new Date().getDay() //0~6
 const isDrawTody = (game: CardData) => game.draw_days?.includes(todayWeekday) ?? false
 const { featured: gamesFeatured, grid: gamesGrid } = useLotteryLatest()
-const { bingoCard } = useBingoLatest()
+const { bingoCard, countdownDisplay } = useBingoLatest()
 // 只解構 bingoCard 整個 useBingoLatest() 都會跑過一次
 // - useAsyncData 打 API
 // - onMounted 註冊
@@ -93,6 +93,7 @@ const cardGradient: Record<string, string> = {
       :guess_odd_even="bingoCard.guess_odd_even"
     >
       <DrawDateButton class="mt-[5px] sm:mt-[10px]">每五分鐘開獎</DrawDateButton>
+      <!-- <DrawDateButton class="mt-[5px] sm:mt-[10px]">下次開獎 ：{{ countdownDisplay }} 秒後</DrawDateButton> -->
     </BingoBingoCard>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
       <LotteryGameCard v-for="game in gamesGrid" :key="game.name + game.draw_term" :game="game">

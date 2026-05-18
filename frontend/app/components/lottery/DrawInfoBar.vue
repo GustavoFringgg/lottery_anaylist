@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const { countdownDisplay } = useBingoLatest()
+
 interface Props {
   drawDate: string
   drawTime: string
@@ -22,8 +24,9 @@ withDefaults(defineProps<Props>(), {
     <div class="text-[17px] sm:text-[20px] font-bold text-center" style="color: #626262">
       {{ drawDate }}{{ showTime ? " " + drawTime : "" }}　第{{ drawTerm }}期
     </div>
-    <div class="text-[15px] sm:text-[16px] font-bold text-center mt-0.5" style="color: #626262">
-      {{ nextDrawLabel }}{{ nextDraw }}
-    </div>
+    <div class="text-[15px] sm:text-[16px] font-bold text-center mt-0.5" style="color: #626262">{{ nextDrawLabel }}{{ nextDraw }}</div>
+    <!-- <div class="text-[15px] sm:text-[16px] font-bold text-center mt-0.5" style="color: #626262" v-if="showTime">
+      倒數開獎時間：{{ countdownDisplay }}後
+    </div> -->
   </div>
 </template>
