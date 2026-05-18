@@ -28,6 +28,7 @@ const seconds = ref(0)
 
 // const pad = (n: number) => String(n).padStart(2, "0")
 
+//TODO:L
 const todayWeekday = new Date().getDay() //0~6
 const isDrawTody = (game: CardData) => game.draw_days?.includes(todayWeekday) ?? false
 const { featured: gamesFeatured, grid: gamesGrid } = useLotteryLatest()
@@ -43,7 +44,8 @@ useHead({ title: "台灣彩券最新開獎號碼 - 專業分析熱點走勢圖" 
 const navCards = [
   { title: "支持公益\n理性投注", to: "/responsible-gambling", color: "green" },
   { title: "免責申明", to: "/disclaimer", color: "orange" },
-  { title: "隱私權保護政策", to: "/privacy-policy", color: "blue" }
+  { title: "隱私權保護政策", to: "/privacy-policy", color: "blue" },
+  { title: "遊戲玩法", to: "/game-rules", color: "green" }
 ]
 
 const cardGradient: Record<string, string> = {
