@@ -49,17 +49,19 @@ const rows = computed(() =>
   }))
 )
 
+//TODO:L
 function cellStyle(row: TrendRow, n: number) {
   if (row.special === n) return { background: "#FF0000", color: "white", fontWeight: "bold" } // 特別號
   if (row.drawnSet.has(n)) return { background: "#FFE868", color: "black", fontWeight: "bold" } // 開出的號碼
   return { background: "white" }
 }
-
+//TODO:L
 function headerCellStyle(n: number) {
   const group = Math.floor((n - 1) / 7)
   return group % 2 === 0 ? { background: "#59ADBC" } : { background: "#1E7888" }
 }
 
+//TODO:L
 const numberStats = computed(() => {
   const regular = new Array(maxNumber + 1).fill(0)
   const special = new Array(maxNumber + 1).fill(0)
@@ -75,11 +77,12 @@ const numberStats = computed(() => {
 
   return { regular, special }
 })
-
+//TODO:L
 const tableWidth = computed(() => 120 + 110 + 30 * maxNumber)
 
 const hasSpecial = computed(() => rows.value.some((row) => row.special !== null))
 
+//TODO:L
 const sortedNumbers = computed(() =>
   [...numberRange].sort((a, b) => {
     const totalA = numberStats.value.regular[a] + (hasSpecial.value ? numberStats.value.special[a] : 0)
@@ -89,6 +92,7 @@ const sortedNumbers = computed(() =>
   })
 )
 
+//TODO:L
 const chartData = computed(() => ({
   labels: sortedNumbers.value,
   datasets: [
