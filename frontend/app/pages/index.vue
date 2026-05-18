@@ -28,10 +28,11 @@ const seconds = ref(0)
 
 // const pad = (n: number) => String(n).padStart(2, "0")
 
+//TODO:L
 const todayWeekday = new Date().getDay() //0~6
 const isDrawTody = (game: CardData) => game.draw_days?.includes(todayWeekday) ?? false
 const { featured: gamesFeatured, grid: gamesGrid } = useLotteryLatest()
-const { bingoCard } = useBingoLatest()
+const { bingoCard, countdownDisplay } = useBingoLatest()
 // 只解構 bingoCard 整個 useBingoLatest() 都會跑過一次
 // - useAsyncData 打 API
 // - onMounted 註冊
@@ -43,7 +44,8 @@ useHead({ title: "台灣彩券最新開獎號碼 - 專業分析熱點走勢圖" 
 const navCards = [
   { title: "支持公益\n理性投注", to: "/responsible-gambling", color: "green" },
   { title: "免責申明", to: "/disclaimer", color: "orange" },
-  { title: "隱私權保護政策", to: "/privacy-policy", color: "blue" }
+  { title: "隱私權保護政策", to: "/privacy-policy", color: "blue" },
+  { title: "遊戲玩法", to: "/game-rules", color: "green" }
 ]
 
 const cardGradient: Record<string, string> = {
@@ -91,6 +93,7 @@ const cardGradient: Record<string, string> = {
       :guess_odd_even="bingoCard.guess_odd_even"
     >
       <DrawDateButton class="mt-[5px] sm:mt-[10px]">每五分鐘開獎</DrawDateButton>
+      <!-- <DrawDateButton class="mt-[5px] sm:mt-[10px]">下次開獎 ：{{ countdownDisplay }} 秒後</DrawDateButton> -->
     </BingoBingoCard>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
       <LotteryGameCard v-for="game in gamesGrid" :key="game.name + game.draw_term" :game="game">

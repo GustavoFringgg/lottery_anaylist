@@ -1,7 +1,7 @@
 <template>
-  <button class="date-btn">
+  <div class="date-btn">
     <slot />
-  </button>
+  </div>
 </template>
 
 <style scoped>
@@ -17,7 +17,6 @@
   border-radius: 45px;
   font-weight: bold;
   color: white;
-  cursor: pointer;
 }
 
 @media (min-width: 640px) {

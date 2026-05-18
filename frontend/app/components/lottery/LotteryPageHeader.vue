@@ -7,13 +7,15 @@ const FEATURES_BY_SLUG: Record<string, Feature[]> = {
     { label: "歷年開獎號碼", value: "history" },
     { label: "分布走勢圖", value: "trend" },
     { label: "各期統計分析", value: "stats" },
-    { label: "單雙比分析圖", value: "odd-even" }
+    { label: "單雙比分析圖", value: "odd-even" },
+    { label: "三分區分布圖", value: "zone" }
   ],
   "big-lotto": [
     { label: "歷年開獎號碼", value: "history" },
     { label: "分布走勢圖", value: "trend" },
     { label: "各期統計分析", value: "stats" },
-    { label: "單雙比分析圖", value: "odd-even" }
+    { label: "單雙比分析圖", value: "odd-even" },
+    { label: "七分區分布圖", value: "zone" }
   ],
   "power-lotto": [{ label: "歷年開獎號碼", value: "history" }]
 }

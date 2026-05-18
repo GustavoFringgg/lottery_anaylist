@@ -4,7 +4,7 @@ const route = useRoute()
 const slug = route.params.slug as string
 
 // 如果不要開放使用 就在VALID_SLUGS[]
-const VALID_SLUGS: string[] = []
+const VALID_SLUGS: string[] = ["539", "big-lotto"]
 const isValidSlug = VALID_SLUGS.includes(slug)
 if (!isValidSlug) {
   if (import.meta.server) {
@@ -48,4 +48,6 @@ useHead({
 })
 </script>
 
-<template>zone7</template>
+<template>
+  <LotteryZone v-if="isValidSlug" :slug="slug" :logoSrc="logoSrc" />
+</template>

@@ -7,19 +7,33 @@ export const useBingoLatest = () => {
 
   let intervalTimer: ReturnType<typeof setInterval> | null = null
   let initialTimer: ReturnType<typeof setTimeout> | null = null
+  let countdownTimer: ReturnType<typeof setInterval> | null = null
 
   const INTERVAL = 5 * 60 * 1000
   const OFFSET = (2 * 60 + 20) * 1000 // 基準分鐘2/7/12...後20秒才打
 
+  const countdown = ref(0)
+
+  function startCountdown(seconds: number) {
+    if (countdownTimer) clearInterval(countdownTimer)
+    countdown.value = seconds
+    countdownTimer = setInterval(() => {
+      if (countdown.value > 0) countdown.value--
+    }, 1000)
+  }
+
   function startPolling() {
     const now = new Date()
     const msUntilNextMark = INTERVAL - ((now.getTime() - OFFSET) % INTERVAL)
+    startCountdown(Math.ceil(msUntilNextMark / 1000))
     initialTimer = setTimeout(() => {
       console.log("[Bingo] 整點5分自動更新", new Date().toLocaleTimeString())
       refresh()
+      startCountdown(INTERVAL / 1000)
       intervalTimer = setInterval(() => {
         console.log("[Bingo] 整點5分自動更新", new Date().toLocaleTimeString())
         refresh()
+        startCountdown(INTERVAL / 1000)
       }, INTERVAL)
     }, msUntilNextMark)
   }
@@ -27,6 +41,7 @@ export const useBingoLatest = () => {
   function stopPolling() {
     if (initialTimer) { clearTimeout(initialTimer); initialTimer = null }
     if (intervalTimer) { clearInterval(intervalTimer); intervalTimer = null }
+    if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null }
   }
 
   function onVisibilityChange() {
@@ -66,5 +81,11 @@ export const useBingoLatest = () => {
     }
   })
 
-  return { bingoCard, error, refresh }
+  const countdownDisplay = computed(() => {
+    const m = Math.floor(countdown.value / 60)
+    const s = countdown.value % 60
+    return m > 0 ? `${m} 分 ${s} 秒` : `${s} 秒`
+  })
+
+  return { bingoCard, error, refresh, countdown, countdownDisplay }
 }
