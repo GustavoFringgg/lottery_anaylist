@@ -44,6 +44,7 @@ onUnmounted(() => clearInterval(timer))
       class="relative w-[350px] h-[210px] sm:w-full sm:max-w-[1170px] sm:h-[355px] overflow-hidden cursor-pointer rounded shadow-md"
       style="border-radius: 5px"
     >
+      <!-- TODO: LL -->
       <TransitionGroup name="fade">
         <div v-for="(slide, i) in slides" v-show="current === i" :key="i" class="absolute inset-0 w-full h-full" @click="handleClick(slide)">
           <NuxtImg
@@ -51,7 +52,6 @@ onUnmounted(() => clearInterval(timer))
             :alt="`廣告 ${i + 1}`"
             :loading="i === 0 ? 'eager' : 'lazy'"
             :fetchpriority="i === 0 ? 'high' : 'auto'"
-            format="webp"
             width="350"
             sizes="350px"
             class="block sm:hidden w-full h-full object-cover"
@@ -61,7 +61,6 @@ onUnmounted(() => clearInterval(timer))
             :alt="`廣告 ${i + 1}`"
             :loading="i === 0 ? 'eager' : 'lazy'"
             :fetchpriority="i === 0 ? 'high' : 'auto'"
-            format="webp"
             width="1170"
             height="355"
             class="hidden sm:block w-full h-full object-cover"
