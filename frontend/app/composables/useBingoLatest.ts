@@ -1,6 +1,7 @@
 import { formatDate } from "~/utils/formatDate"
 
 // 模組層級 singleton：確保 timer 與 listener 只有一份
+//TODO:L
 let intervalTimer: ReturnType<typeof setInterval> | null = null
 let initialTimer: ReturnType<typeof setTimeout> | null = null
 let countdownTimer: ReturnType<typeof setInterval> | null = null
@@ -26,6 +27,7 @@ export const useBingoLatest = () => {
     }, 1000)
   }
 
+  //TODO:L
   function startPolling() {
     const now = new Date()
     const msUntilNextMark = INTERVAL - ((now.getTime() - OFFSET) % INTERVAL)
@@ -42,6 +44,7 @@ export const useBingoLatest = () => {
     }, msUntilNextMark)
   }
 
+  //TODO:L
   function stopPolling() {
     if (initialTimer) {
       clearTimeout(initialTimer)
@@ -89,6 +92,7 @@ export const useBingoLatest = () => {
     }
   })
 
+  //TODO:L
   const bingoCard = computed(() => {
     if (!data.value) return null
     const d = data.value
@@ -107,6 +111,7 @@ export const useBingoLatest = () => {
     }
   })
 
+  //TODO:L
   const countdownDisplay = computed(() => {
     const m = Math.floor(countdown.value / 60)
     const s = countdown.value % 60
