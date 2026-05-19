@@ -110,7 +110,8 @@ export default defineNuxtConfig({
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'G-Z5TWHGFH4L');
-          `
+          `,
+          defer: true
         }
       ]
     }
