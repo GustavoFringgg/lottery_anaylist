@@ -40,7 +40,7 @@ const gridStyle = computed(() => {
   <div class="game-card flex flex-col w-full relative" :style="{ backgroundColor: game.bgColor ?? '#ffffff', borderRadius: '5px' }">
     <div class="absolute top-1 left-1 sm:top-1 sm:left-3"><slot /></div>
     <div class="flex justify-center pt-4 pb-2">
-      <NuxtImg v-if="game.logo" :src="game.logo" :alt="game.name" width="200" loading="lazy" class="w-[200px] h-[80px] object-contain" />
+      <NuxtImg v-if="game.logo" :src="game.logo" :alt="game.name" width="200" sizes="200px" loading="lazy" class="w-[200px] h-[80px] object-contain" />
     </div>
     <!-- Draw info bar -->
     <div :class="fullWidth ? 'sm:mx-[100px]' : ''">

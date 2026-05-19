@@ -11,7 +11,7 @@ import { menuItems } from "~/constants"
       class="flex items-center gap-3 px-3 py-2 rounded-lg"
       style="background-color: #3a96a6"
     >
-      <NuxtImg :src="item.logo" :alt="item.label" width="80" loading="lazy" class="h-10 w-[80px] object-contain shrink-0" />
+      <NuxtImg :src="item.logo" :alt="item.label" width="80" sizes="80px" loading="lazy" class="h-10 w-[80px] object-contain shrink-0" />
       <span class="text-white font-medium text-[16px]">分析參考</span>
     </NuxtLink>
   </div>

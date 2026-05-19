@@ -37,6 +37,7 @@ const route = useRoute()
             :src="item.logo"
             :alt="item.label"
             width="120"
+            sizes="120px"
             loading="lazy"
             class="w-[120px] h-[70px] object-contain group-hover:opacity-80 transition-opacity"
           />
