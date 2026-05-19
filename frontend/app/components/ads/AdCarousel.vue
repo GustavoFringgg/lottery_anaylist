@@ -46,16 +46,26 @@ onUnmounted(() => clearInterval(timer))
     >
       <TransitionGroup name="fade">
         <div v-for="(slide, i) in slides" v-show="current === i" :key="i" class="absolute inset-0 w-full h-full" @click="handleClick(slide)">
-          <picture class="w-full h-full">
-            <source media="(min-width: 640px)" :srcset="slide.desktop" />
-            <img
-              :src="slide.mobile"
-              :alt="`廣告 ${i + 1}`"
-              :loading="i === 0 ? 'eager' : 'lazy'"
-              :fetchpriority="i === 0 ? 'high' : 'auto'"
-              class="w-full h-full object-cover"
-            />
-          </picture>
+          <NuxtImg
+            :src="slide.mobile"
+            :alt="`廣告 ${i + 1}`"
+            :loading="i === 0 ? 'eager' : 'lazy'"
+            :fetchpriority="i === 0 ? 'high' : 'auto'"
+            format="webp"
+            width="613"
+            height="368"
+            class="block sm:hidden w-full h-full object-cover"
+          />
+          <NuxtImg
+            :src="slide.desktop"
+            :alt="`廣告 ${i + 1}`"
+            :loading="i === 0 ? 'eager' : 'lazy'"
+            :fetchpriority="i === 0 ? 'high' : 'auto'"
+            format="webp"
+            width="1170"
+            height="355"
+            class="hidden sm:block w-full h-full object-cover"
+          />
         </div>
       </TransitionGroup>
     </div>
