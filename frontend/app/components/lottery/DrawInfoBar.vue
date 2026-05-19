@@ -25,8 +25,8 @@ withDefaults(defineProps<Props>(), {
       {{ drawDate }}{{ showTime ? " " + drawTime : "" }}　第{{ drawTerm }}期
     </div>
     <div class="text-[15px] sm:text-[16px] font-bold text-center mt-0.5" style="color: #626262">{{ nextDrawLabel }}{{ nextDraw }}</div>
-    <!-- <div class="text-[15px] sm:text-[16px] font-bold text-center mt-0.5" style="color: #626262" v-if="showTime">
-      倒數開獎時間：{{ countdownDisplay }}後
-    </div> -->
+    <div class="text-[15px] sm:text-[16px] font-bold text-center mt-0.5" style="color: #626262" v-if="showTime">
+      自動更新開獎號碼：{{ countdownDisplay }}後
+    </div>
   </div>
 </template>
