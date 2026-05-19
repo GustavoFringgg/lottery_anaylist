@@ -3,7 +3,7 @@ from sqlalchemy import Column
 from sqlalchemy.dialects.postgresql import ARRAY, INTEGER
 from typing import Optional, List
 from datetime import datetime, date
-
+from sqlalchemy import Column, UniqueConstraint
 
 class Game(SQLModel, table=True):
     game_code: int = Field(primary_key=True)
@@ -12,6 +12,7 @@ class Game(SQLModel, table=True):
 
 
 class DrawsList(SQLModel, table=True):
+    __table_args__ = (UniqueConstraint("game_code", "term", name="uq_drawslist_game_term"),)
     id: Optional[int] = Field(default=None, primary_key=True)
     game_code: int = Field(foreign_key="game.game_code")
     term: str
