@@ -1,4 +1,4 @@
-import type { DrawsResponse } from "~/types/index"
+import type { DrawsResponse } from "../../../../app/types/index"
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig(event)

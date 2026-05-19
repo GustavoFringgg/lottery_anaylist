@@ -16,6 +16,7 @@ const route = useRoute()
             alt="539樂翻天"
             width="300"
             loading="eager"
+            fetchpriority="high"
             class="h-[44px] sm:h-[90px] w-auto object-contain"
           />
         </NuxtLink>
