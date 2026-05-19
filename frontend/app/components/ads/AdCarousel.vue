@@ -52,8 +52,8 @@ onUnmounted(() => clearInterval(timer))
             :loading="i === 0 ? 'eager' : 'lazy'"
             :fetchpriority="i === 0 ? 'high' : 'auto'"
             format="webp"
-            width="613"
-            height="368"
+            width="350"
+            sizes="350px"
             class="block sm:hidden w-full h-full object-cover"
           />
           <NuxtImg
