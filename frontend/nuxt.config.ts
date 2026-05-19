@@ -85,13 +85,13 @@ export default defineNuxtConfig({
         {
           rel: "preload",
           as: "style",
-          href: "https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap",
+          href: "https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@700;900&display=swap",
           onload: "this.rel='stylesheet'"
         }
       ],
       noscript: [
         {
-          innerHTML: `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap">`
+          innerHTML: `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@700;900&display=swap">`
         }
       ],
       script: [
